@@ -10,8 +10,12 @@ import java.util.List;
 public interface WineTastingDAO {
 
     public void createSession(WineTastingSession session);
+
     public void updateSession(WineTastingSession session);
+
     public void deeleteSession(WineTastingSession session);
 
     public WineTastingSession findSessionByDate(ZonedDateTime date); //maybe other type would be appropriate
+
     public List<WineTastingSession> findAllSessions();
+}
