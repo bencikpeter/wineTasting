@@ -13,7 +13,7 @@ public interface WineTastingDAO {
 
     public void updateSession(WineTastingSession session);
 
-    public void deeleteSession(WineTastingSession session);
+    public void deleteSession(WineTastingSession session);
 
     public WineTastingSession findSessionByDate(ZonedDateTime date); //maybe other type would be appropriate
 
