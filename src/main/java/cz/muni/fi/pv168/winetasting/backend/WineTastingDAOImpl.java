@@ -92,6 +92,29 @@ public class WineTastingDAOImpl implements WineTastingDAO {
 
     @Override
     public void deleteSession(WineTastingSession session) {
+        if (session == null){
+            throw new IllegalArgumentException("session is null");
+        }
+        if (session.getID() == null){
+            throw new IllegalArgumentException("grave id is null");
+        }
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM WineTastingSession WHERE ID = ?")){
+
+            statement.setLong(1,session.getID());
+
+            int deletedRows = statement.executeUpdate();
+
+            if (deletedRows == 0){
+                //TODO exception - entity not found in database
+            } else if (deletedRows !=1){
+                //TODO exception - more than one row deleted
+            }
+
+        } catch (SQLException ex){
+            //TODO and exception again
+        }
 
     }
 
