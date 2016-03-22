@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
  */
 public class WineTastingSession {
 
-    private int ID;
+    private Long ID;
     private String place;
     private ZonedDateTime dateTime;
 
@@ -23,11 +23,11 @@ public class WineTastingSession {
         this.dateTime = dateTime;
     }
 
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
