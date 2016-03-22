@@ -37,16 +37,19 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             throw new IllegalArgumentException("ID already set");
         }
 
-        try(Connection connection = dataSource.getConnection()){
+        try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("INSERT INTO WineTastingSession (ID, place, date)" +
-                                                                        "VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                                                                        "VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)){
             statement.setLong(1, session.getID());
             statement.setString(2, session.getPlace());
             statement.setDate(3, toSqlDate(session.getDateTime()));
-            statement.executeUpdate();
-
+            int addedRows = statement.executeUpdate();
+            if (addedRows != 1){
+                //TODO another candidate for throwing ServiceFailureException
+            }
             ResultSet keys = statement.getGeneratedKeys();
             session.setID(keys.getLong(1));
+
 
             //connection.commit();
             //no need to commit - connections by default are in auto commit mode
@@ -54,13 +57,36 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         } catch (SQLException ex){
             //TODO manage this exception
             //I was thinking - what about making a universal exception as in https://github.com/petradamek/PV168/
-            //something like ServiceFailure exception
+            //something like ServiceFailureException
         }
 
     }
 
     @Override
     public void updateSession(WineTastingSession session) {
+        chceckDataSource();
+        validate(session);
+
+        if (session.getID() == null){
+            throw new IllegalArgumentException("Undefined session ID");
+        }
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("UPDATE WineTastingSession SET place = ?, date = ? " +
+                                                                        "WHERE ID = ?")){
+            statement.setString(1,session.getPlace());
+            statement.setDate(2,toSqlDate(session.getDateTime()));
+            statement.setLong(3,session.getID());
+
+            int updatedRows = statement.executeUpdate();
+            if (updatedRows == 0){
+                //TODO exception - session not found in DB
+            } else if(updatedRows != 1){
+                //TODO exception - invalid number of updated rows
+            }
+
+        } catch (SQLException ex){
+            //TODO and exception again
+        }
 
     }
 
