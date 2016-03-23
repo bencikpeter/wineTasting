@@ -15,7 +15,7 @@ public interface WineTastingDAO {
 
     public void deleteSession(WineTastingSession session);
 
-    public WineTastingSession findSessionByDate(ZonedDateTime date); //maybe other type would be appropriate
+    public List<WineTastingSession> findSessionByDate(ZonedDateTime date); //maybe other type would be appropriate
 
     public List<WineTastingSession> findAllSessions();
 }

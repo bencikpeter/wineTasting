@@ -1,12 +1,10 @@
 package cz.muni.fi.pv168.winetasting.backend;
 
+import cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException;
+import cz.muni.fi.pv168.winetasting.backend.Exceptions.ValidationException;
+
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -19,9 +17,13 @@ public class WineTastingDAOImpl implements WineTastingDAO {
 
     public void setDataSource(DataSource dataSource){
         this.dataSource = dataSource;
+    } // not sure if this method will be useful
+
+    public WineTastingDAOImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    private void chceckDataSource(){
+    private void checkDataSource(){
         if (dataSource == null){
             throw new IllegalStateException("DataSource is null");
         }
@@ -30,7 +32,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
 
     @Override
     public void createSession(WineTastingSession session) {
-        chceckDataSource();
+        checkDataSource();
         validate(session);
 
         if (session.getID() != null){
@@ -38,33 +40,28 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         }
 
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO WineTastingSession (ID, place, date)" +
-                                                                        "VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)){
-            statement.setLong(1, session.getID());
-            statement.setString(2, session.getPlace());
-            statement.setDate(3, toSqlDate(session.getDateTime()));
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO WineTastingSession (place, date)" +
+                                                                        "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)){
+            statement.setString(1, session.getPlace());
+            statement.setTimestamp(2, toSqlDate(session.getDateTime()));
             int addedRows = statement.executeUpdate();
             if (addedRows != 1){
-                //TODO another candidate for throwing ServiceFailureException
+                throw new ServiceFailureException("createSession: number of added rows is not one");
             }
             ResultSet keys = statement.getGeneratedKeys();
             session.setID(keys.getLong(1));
-
 
             //connection.commit();
             //no need to commit - connections by default are in auto commit mode
 
         } catch (SQLException ex){
-            //TODO manage this exception
-            //I was thinking - what about making a universal exception as in https://github.com/petradamek/PV168/
-            //something like ServiceFailureException
+            throw new ServiceFailureException("error when inserting session int db", ex);
         }
-
     }
 
     @Override
     public void updateSession(WineTastingSession session) {
-        chceckDataSource();
+        checkDataSource();
         validate(session);
 
         if (session.getID() == null){
@@ -74,18 +71,18 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             PreparedStatement statement = connection.prepareStatement("UPDATE WineTastingSession SET place = ?, date = ? " +
                                                                         "WHERE ID = ?")){
             statement.setString(1,session.getPlace());
-            statement.setDate(2,toSqlDate(session.getDateTime()));
+            statement.setTimestamp(2,toSqlDate(session.getDateTime()));
             statement.setLong(3,session.getID());
 
             int updatedRows = statement.executeUpdate();
             if (updatedRows == 0){
-                //TODO exception - session not found in DB
+                throw new ServiceFailureException("session not found in db");
             } else if(updatedRows != 1){
-                //TODO exception - invalid number of updated rows
+                throw new ServiceFailureException("invalid number of updater rows");
             }
 
         } catch (SQLException ex){
-            //TODO and exception again
+            throw new ServiceFailureException("error updating session", ex);
         }
 
     }
@@ -96,7 +93,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             throw new IllegalArgumentException("session is null");
         }
         if (session.getID() == null){
-            throw new IllegalArgumentException("grave id is null");
+            throw new IllegalArgumentException("session id is null");
         }
 
         try(Connection connection = dataSource.getConnection();
@@ -107,30 +104,59 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             int deletedRows = statement.executeUpdate();
 
             if (deletedRows == 0){
-                //TODO exception - entity not found in database
+                throw new ServiceFailureException("entity not found in db");
             } else if (deletedRows !=1){
-                //TODO exception - more than one row deleted
+                throw new ServiceFailureException("more than one row deleted");
             }
 
         } catch (SQLException ex){
-            //TODO and exception again
+            throw new ServiceFailureException("error deleting session", ex);
         }
 
     }
 
     @Override
-    public WineTastingSession findSessionByDate(ZonedDateTime date) {
+    public List<WineTastingSession> findSessionByDate(ZonedDateTime date) {
+        //TODO implement findSession
+        if (date == null) {
+            throw new IllegalArgumentException("date is null");
+        }
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT id, place, date FROM WineTastingSession WHERE date = ?")) {
+
+            statement.setTimestamp(1, toSqlDate(date));
+            ResultSet rs = statement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    @Override
+        @Override
     public List<WineTastingSession> findAllSessions() {
+        //TODO findAllSessions
         return null;
     }
 
-    private static void validate(WineTastingSession session){} //TODO implement session validation
+    private static void validate(WineTastingSession session) {
+        if (session == null) {
+            throw new IllegalArgumentException("session is null");
+        }
+        if (session.getID() == null) {
+            throw new ValidationException("ID is null");
+        }
+        if (session.getPlace() == null) {
+            throw new ValidationException("place is null");
+        }
+        if (session.getDateTime() == null) {
+            throw new ValidationException("DateTime is null");
+        }
+    }
 
-    private Date toSqlDate(ZonedDateTime zonedDateTime){ //TODO implement somehow that freaking conversion
-        return null;
+    private Timestamp toSqlDate(ZonedDateTime zonedDateTime){ //TODO check and maybe change return type
+        return new Timestamp(zonedDateTime.toInstant().getEpochSecond() * 1000L);
     }
 }
