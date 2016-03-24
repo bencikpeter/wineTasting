@@ -5,7 +5,8 @@ import cz.muni.fi.pv168.winetasting.backend.Exceptions.ValidationException;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO WineTastingSession (place, date)" +
                                                                         "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)){
             statement.setString(1, session.getPlace());
-            statement.setTimestamp(2, toSqlDate(session.getDateTime()));
+            statement.setDate(2, toSqlDate(session.getDate()));
             int addedRows = statement.executeUpdate();
             if (addedRows != 1){
                 throw new ServiceFailureException("createSession: number of added rows is not one");
@@ -71,7 +72,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             PreparedStatement statement = connection.prepareStatement("UPDATE WineTastingSession SET place = ?, date = ? " +
                                                                         "WHERE ID = ?")){
             statement.setString(1,session.getPlace());
-            statement.setTimestamp(2,toSqlDate(session.getDateTime()));
+            statement.setDate(2,toSqlDate(session.getDate()));
             statement.setLong(3,session.getID());
 
             int updatedRows = statement.executeUpdate();
@@ -116,47 +117,76 @@ public class WineTastingDAOImpl implements WineTastingDAO {
     }
 
     @Override
-    public List<WineTastingSession> findSessionByDate(ZonedDateTime date) {
-        //TODO implement findSession
+    public List<WineTastingSession> findSessionByDate(LocalDate date) throws SQLException {
+        checkDataSource();
+
         if (date == null) {
             throw new IllegalArgumentException("date is null");
         }
+
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "SELECT id, place, date FROM WineTastingSession WHERE date = ?")) {
-
-            statement.setTimestamp(1, toSqlDate(date));
+                        "SELECT id, place, date FROM WineTastingSession WHERE date = ?")){
+            statement.setDate(1, toSqlDate(date));
             ResultSet rs = statement.executeQuery();
+            List<WineTastingSession> result = new ArrayList<>();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            while (rs.next()) {
+                result.add(resultSetToWineTastingSession(rs));
+            }
+
+            return result;
+
+        } catch (SQLException ex) {
+            throw new ServiceFailureException("error retrieving sessions by date", ex);
         }
-        return null;
     }
 
         @Override
     public List<WineTastingSession> findAllSessions() {
-        //TODO findAllSessions
-        return null;
+            try (
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement statement = connection.prepareStatement(
+                            "SELECT id, place, date FROM WineTastingSession")) {
+
+                ResultSet rs = statement.executeQuery();
+                List<WineTastingSession> result = new ArrayList<>();
+
+                while (rs.next()) {
+                    result.add(resultSetToWineTastingSession(rs));
+                }
+
+                return result;
+
+            } catch (SQLException ex) {
+                throw new ServiceFailureException("error retrieving all sessions", ex);
+            }
     }
 
     private static void validate(WineTastingSession session) {
         if (session == null) {
             throw new IllegalArgumentException("session is null");
         }
-        if (session.getID() == null) {
-            throw new ValidationException("ID is null");
-        }
         if (session.getPlace() == null) {
             throw new ValidationException("place is null");
         }
-        if (session.getDateTime() == null) {
+        if (session.getDate() == null) {
             throw new ValidationException("DateTime is null");
         }
     }
 
-    private Timestamp toSqlDate(ZonedDateTime zonedDateTime){ //TODO check and maybe change return type
-        return new Timestamp(zonedDateTime.toInstant().getEpochSecond() * 1000L);
+    private static Date toSqlDate(LocalDate localDate) {
+        return localDate == null ? null : Date.valueOf(localDate);
+    }
+
+    private WineTastingSession resultSetToWineTastingSession(ResultSet rs) throws SQLException {
+        WineTastingSession wineTastingSession = new WineTastingSession();
+
+        wineTastingSession.setID(rs.getLong("id"));
+        wineTastingSession.setPlace(rs.getString("place"));
+       // wineTastingSession.getDate(rs.getDate("date")); //TODO implement this somehow normally
+
+        return wineTastingSession;
     }
 }
