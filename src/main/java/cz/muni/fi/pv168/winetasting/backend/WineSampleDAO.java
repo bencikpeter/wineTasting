@@ -15,8 +15,9 @@ public interface WineSampleDAO {
     /**
      * gets all wine samples with specified variety from db
      * @return List<WineSample>
+     * @param variety variety of wine
      */
-    public List<WineSample> findWineSamplesByVariety();
+    public List<WineSample> findWineSamplesByVariety(String variety);
 
     /**
      * gets specific wine sample from db
@@ -24,7 +25,7 @@ public interface WineSampleDAO {
      * @param id id of wine sample
      * @return WineSample
      */
-    public WineSample findWineSampleById(Integer id);
+    public WineSample findWineSampleById(Long id);
 
     /**
      * inserts wine sample into db

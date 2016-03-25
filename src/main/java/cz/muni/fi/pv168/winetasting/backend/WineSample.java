@@ -5,7 +5,7 @@ package cz.muni.fi.pv168.winetasting.backend;
  */
 public class WineSample {
 
-    private Integer id;
+    private Long id = null;
     private String vintnerFirstName;
     private String vintnerLastName;
     private String variety;
@@ -13,24 +13,63 @@ public class WineSample {
     private WineCharacter character;
     private int year;
 
-    public WineSample(Integer id, String vintnerFirstName, String vintnerLastName, String variety, WineColor color, WineCharacter character, int year) {
-        this.id = id;
-        this.vintnerFirstName = vintnerFirstName;
-        this.vintnerLastName = vintnerLastName;
-        this.variety = variety;
-        this.color = color;
-        this.character = character;
-        this.year = year;
+    public static class Builder{
+        private String vintnerFirstName;
+        private String vintnerLastName;
+        private String variety;
+        private WineColor color;
+        private WineCharacter character;
+        private int year;
+
+        public Builder(String variety) {
+            this.variety = variety;
+        }
+
+        public Builder vintnerName(String vintnerLastName, String vintnerFirstName) {
+            this.vintnerLastName = vintnerLastName;
+            this.vintnerFirstName = vintnerFirstName;
+            return this;
+        }
+
+        public Builder color(WineColor color){
+            this.color = color;
+            return this;
+        }
+
+        public Builder character(WineCharacter character) {
+            this.character = character;
+            return this;
+        }
+
+        public Builder year(int year) {
+            this.year = year;
+            return this;
+        }
+
+        public WineSample build() {
+            return new WineSample(this);
+        }
+
+    }
+
+    private WineSample(Builder builder) {
+        this.variety = builder.variety;
+        this.vintnerFirstName = builder.vintnerFirstName;
+        this.vintnerLastName = builder.vintnerLastName;
+        this.color = builder.color;
+        this.character = builder.character;
+        this.year = builder.year;
     }
 
     public WineSample() {
+
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
