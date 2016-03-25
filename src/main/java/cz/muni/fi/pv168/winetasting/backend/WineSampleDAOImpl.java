@@ -12,12 +12,12 @@ public class WineSampleDAOImpl implements WineSampleDAO {
     }
 
     @Override
-    public List<WineSample> findWineSamplesByVariety() {
+    public List<WineSample> findWineSamplesByVariety(String variety) {
         return null;
     }
 
     @Override
-    public WineSample findWineSampleById(Integer id) {
+    public WineSample findWineSampleById(Long id) {
         return null;
     }
 
