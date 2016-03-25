@@ -117,7 +117,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
     }
 
     @Override
-    public List<WineTastingSession> findSessionByDate(LocalDate date) throws SQLException {
+    public List<WineTastingSession> findSessionByDate(LocalDate date) {
         checkDataSource();
 
         if (date == null) {
@@ -176,17 +176,21 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         }
     }
 
-    private static Date toSqlDate(LocalDate localDate) {
-        return localDate == null ? null : Date.valueOf(localDate);
-    }
-
     private WineTastingSession resultSetToWineTastingSession(ResultSet rs) throws SQLException {
         WineTastingSession wineTastingSession = new WineTastingSession();
 
         wineTastingSession.setID(rs.getLong("id"));
         wineTastingSession.setPlace(rs.getString("place"));
-       // wineTastingSession.getDate(rs.getDate("date")); //TODO implement this somehow normally
+        wineTastingSession.setDate(toLocalDate(rs.getDate("date")));
 
         return wineTastingSession;
+    }
+
+    private static Date toSqlDate(LocalDate localDate) {
+        return localDate == null ? null : Date.valueOf(localDate);
+    }
+
+    private static LocalDate toLocalDate(Date date) {
+        return date == null ? null : date.toLocalDate();
     }
 }
