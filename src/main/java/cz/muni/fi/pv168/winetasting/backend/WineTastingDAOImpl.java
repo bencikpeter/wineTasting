@@ -42,7 +42,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("INSERT INTO WineTastingSession (place, date)" +
-                                                                        "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)){
+                    "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)){
             statement.setString(1, session.getPlace());
             statement.setDate(2, toSqlDate(session.getDate()));
             int addedRows = statement.executeUpdate();
@@ -70,7 +70,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         }
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("UPDATE WineTastingSession SET place = ?, date = ? " +
-                                                                        "WHERE ID = ?")){
+                    "WHERE ID = ?")){
             statement.setString(1,session.getPlace());
             statement.setDate(2,toSqlDate(session.getDate()));
             statement.setLong(3,session.getID());
@@ -143,25 +143,25 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         }
     }
 
-        @Override
+    @Override
     public List<WineTastingSession> findAllSessions() {
-            try (
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement statement = connection.prepareStatement(
-                            "SELECT id, place, date FROM WineTastingSession")) {
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT id, place, date FROM WineTastingSession")) {
 
-                ResultSet rs = statement.executeQuery();
-                List<WineTastingSession> result = new ArrayList<>();
+            ResultSet rs = statement.executeQuery();
+            List<WineTastingSession> result = new ArrayList<>();
 
-                while (rs.next()) {
-                    result.add(resultSetToWineTastingSession(rs));
-                }
-
-                return result;
-
-            } catch (SQLException ex) {
-                throw new ServiceFailureException("error retrieving all sessions", ex);
+            while (rs.next()) {
+                result.add(resultSetToWineTastingSession(rs));
             }
+
+            return result;
+
+        } catch (SQLException ex) {
+            throw new ServiceFailureException("error retrieving all sessions", ex);
+        }
     }
 
     private static void validate(WineTastingSession session) {
