@@ -1,5 +1,8 @@
 package cz.muni.fi.pv168.winetasting.backend;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public interface WineTastingDAO {
 
     public void deleteSession(WineTastingSession session);
 
-    public WineTastingSession findSessionByDate(ZonedDateTime date); //maybe other type would be appropriate
+    public List<WineTastingSession> findSessionByDate(LocalDate date) throws SQLException; //maybe other type would be appropriate
 
     public List<WineTastingSession> findAllSessions();
 }

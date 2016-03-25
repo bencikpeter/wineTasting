@@ -1,33 +1,33 @@
 package cz.muni.fi.pv168.winetasting.backend;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 /**
  * Created by bencikpeter on 15.03.16.
  */
 public class WineTastingSession {
 
-    private int ID;
+    private Long ID;
     private String place;
-    private ZonedDateTime dateTime;
+    private LocalDate date;
 
     public WineTastingSession() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    public ZonedDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(ZonedDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public int getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 

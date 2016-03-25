@@ -3,14 +3,11 @@ package cz.muni.fi.pv168.winetasting.backend;
 import org.junit.Before;
 import org.testng.annotations.Test;
 
-import java.sql.SQLException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import java.time.ZonedDateTime;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;

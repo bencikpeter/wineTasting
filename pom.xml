@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
  
     <groupId>cz.muni.fi.pv168</groupId>
-    <artifactId>grave-manager</artifactId>
+    <artifactId>wineTasting</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Example for unit tests in PV168 course</name>
+    <name>Wine Tasting project</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,6 +36,31 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope><!-- it is included only during tests -->
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>10.11.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.11.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.1</version>
         </dependency>
     </dependencies>
 
