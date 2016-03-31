@@ -1,0 +1,21 @@
+CREATE TABLE "WineSample" (
+  "ID" BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  "vintnerFirstName" VARCHAR(20),
+  "vintnerLastName" VARCHAR(30),
+  "variety" VARCHAR(40),
+  "color" VARCHAR(6),
+  "character" VARCHAR(4),
+  "year" INT
+);
+
+CREATE TABLE "WineTastingSession" (
+  "ID" BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  "place" VARCHAR(255),
+  "date" DATE
+);
+
+CREATE TABLE "WineTasting" (
+  "ID" BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  "sessionId" BIGINT NOT NULL REFERENCES WineTastingSession (ID),
+  "sampleId" BIGINT NOT NULL REFERENCES WineSample (ID)
+);
