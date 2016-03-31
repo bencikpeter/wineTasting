@@ -4,7 +4,12 @@ import cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException;
 import cz.muni.fi.pv168.winetasting.backend.Exceptions.ValidationException;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -141,6 +146,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         return null;
     }
 
+
     private static void validate(WineTastingSession session) {
         if (session == null) {
             throw new IllegalArgumentException("session is null");
@@ -155,6 +161,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             throw new ValidationException("DateTime is null");
         }
     }
+
 
     private Timestamp toSqlDate(ZonedDateTime zonedDateTime){ //TODO check and maybe change return type
         return new Timestamp(zonedDateTime.toInstant().getEpochSecond() * 1000L);
