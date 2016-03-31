@@ -11,7 +11,7 @@ public interface WineTastingManager {
      * these wines need to be in these groups for output at least, maybe in the database too
      * @param session session, which will do the tasting and rating of wines
      */
-    void generateWinesLayout(WineTastingSession session); // maybe should not return void, need to reconsider
+    WinesLayout generateWinesLayout(WineTastingSession session); // maybe should not return void, need to reconsider
 
     /**
      * assign wine sample to specific session

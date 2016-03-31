@@ -32,8 +32,11 @@ public class WineTastingManagerImpl implements WineTastingManager{
     }
 
     @Override
-    public void generateWinesLayout(WineTastingSession session) {
-        //TODO implement algorithm to generateWinesLayout
+    public WinesLayout generateWinesLayout(WineTastingSession session) {
+        checkDataSource();
+        List wines = findAllWinesInSession(session);
+        return new WinesLayout(wines);
+
     }
 
     @Override
