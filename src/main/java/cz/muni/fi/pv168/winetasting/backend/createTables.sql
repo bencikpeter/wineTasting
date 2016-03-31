@@ -1,11 +1,11 @@
-CREATE TABLE "WineSample" (
+CREATE TABLE "WINESAMPLE" (
   "ID" BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  "vintnerFirstName" VARCHAR(20),
-  "vintnerLastName" VARCHAR(30),
-  "variety" VARCHAR(40),
-  "color" VARCHAR(6),
-  "character" VARCHAR(4),
-  "year" INT
+  "VINTNERFIRSTNAME" VARCHAR(20),
+  "VINTNERLASTNAME" VARCHAR(30),
+  "VARIETY" VARCHAR(40),
+  "COLOR" VARCHAR(6),
+  "CHARACTER_" VARCHAR(4),
+  "YEAR_" INT
 );
 
 CREATE TABLE "WineTastingSession" (
@@ -16,6 +16,6 @@ CREATE TABLE "WineTastingSession" (
 
 CREATE TABLE "WineTasting" (
   "ID" BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  "sessionId" BIGINT NOT NULL REFERENCES WineTastingSession (ID),
-  "sampleId" BIGINT NOT NULL REFERENCES WineSample (ID)
+  "sessionId" BIGINT NOT NULL, --REFERENCES WineTastingSession (ID),
+  "sampleId" BIGINT NOT NULL --REFERENCES WineSample (ID)
 );

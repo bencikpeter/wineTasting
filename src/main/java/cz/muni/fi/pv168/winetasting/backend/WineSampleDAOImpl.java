@@ -90,7 +90,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
         validate(wineSample);
 
         if (wineSample.getId() != null) {
-            throw new IllegalArgumentException("id already exists");
+           // throw new IllegalArgumentException("id already exists");
         }
 
         try(Connection connection = dataSource.getConnection();
@@ -99,8 +99,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                                 "vintnerLastName," +
                                 "variety," +
                                 "color," +
-                                "character," +
-                                "year) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                                "character_," +
+                                "year_) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, wineSample.getVintnerFirstName());
             statement.setString(2, wineSample.getVintnerLastName());
@@ -135,8 +135,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "vintnerLastName = ?," +
                             "variety = ?," +
                             "color = ?," +
-                            "character = ?," +
-                            "year = ?")) {
+                            "character_ = ?," +
+                            "year_ = ?")) {
 
             statement.setString(1, wineSample.getVintnerFirstName());
             statement.setString(2, wineSample.getVintnerLastName());
@@ -194,8 +194,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "vintnerLastName," +
                             "variety," +
                             "color," +
-                            "character," +
-                            "year FROM WineSample WHERE id = ?")) {
+                            "character_," +
+                            "year_ FROM WineSample WHERE id = ?")) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -225,8 +225,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "vintnerLastName," +
                             "variety," +
                             "color," +
-                            "character," +
-                            "year FROM WineSample")) {
+                            "character_," +
+                            "year_ FROM WineSample")) {
             ResultSet resultSet = statement.executeQuery();
 
             List<WineSample> wineSamples = new ArrayList<>();
@@ -249,8 +249,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "vintnerLastName," +
                             "variety," +
                             "color," +
-                            "character," +
-                            "year FROM WineSample WHERE variety = ?")) {
+                            "character_," +
+                            "year_ FROM WineSample WHERE variety = ?")) {
             statement.setString(1, variety);
             ResultSet resultSet = statement.executeQuery();
 

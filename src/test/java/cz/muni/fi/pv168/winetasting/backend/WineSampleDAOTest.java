@@ -1,8 +1,16 @@
 package cz.muni.fi.pv168.winetasting.backend;
 
+import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,11 +24,58 @@ import static org.junit.Assert.*;
  */
 public class WineSampleDAOTest {
 
-    private WineSampleDAO manager;
+    private WineSampleDAOImpl manager;
+    private DataSource dataSource;
+
+    private static DataSource prepareDataSource() throws SQLException {
+        EmbeddedDataSource dataSource = new EmbeddedDataSource();
+        // we will use in memory database
+        dataSource.setDatabaseName("memory:winesample-test");
+        // database is created automatically if it does not exist yet
+        dataSource.setCreateDatabase("create");
+        return dataSource;
+    }
+
+    private static String[] readSqlStatements(URL url) {
+        try {
+            char buffer[] = new char[256];
+            StringBuilder result = new StringBuilder();
+            InputStreamReader reader = new InputStreamReader(url.openStream(), "UTF-8");
+            while (true) {
+                int count = reader.read(buffer);
+                if (count < 0) {
+                    break;
+                }
+                result.append(buffer, 0, count);
+            }
+            return result.toString().split(";");
+        } catch (IOException ex) {
+            throw new RuntimeException("Cannot read " + url, ex);
+        }
+    }
 
     @Before
-    public void setUp() {
-        manager = new WineSampleDAOImpl();
+    public void setUp() throws SQLException {
+        dataSource = prepareDataSource();
+        try(Connection connection = dataSource.getConnection()) {
+            for (String sqlStatement : readSqlStatements(WineTastingManager.class.getResource("createTables.sql"))) {
+                if (!sqlStatement.trim().isEmpty()) {
+                    connection.prepareStatement(sqlStatement).executeUpdate();
+                }
+            }
+        }
+        manager = new WineSampleDAOImpl(dataSource);
+    }
+
+    @After
+    public void tearDown() throws SQLException {
+        try(Connection connection = dataSource.getConnection()) {
+            for (String sqlStatement : readSqlStatements(WineTastingManager.class.getResource("dropTables.sql"))) {
+                if (!sqlStatement.trim().isEmpty()) {
+                    connection.prepareStatement(sqlStatement).executeUpdate();
+                }
+            }
+        }
     }
 
     @Test

@@ -1,3 +1,3 @@
-DROP TABLE "WineSample";
+DROP TABLE "WINESAMPLE";
 DROP TABLE "WineTastingSession";
 DROP TABLE "WineTasting";

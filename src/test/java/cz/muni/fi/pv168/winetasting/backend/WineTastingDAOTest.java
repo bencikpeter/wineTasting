@@ -1,20 +1,8 @@
 package cz.muni.fi.pv168.winetasting.backend;
 
-import org.junit.Before;
-import org.testng.annotations.Test;
-
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 /**
  * Created by bencikpeter on 16.03.16.
- */
+ *//*
 public class WineTastingDAOTest {
 
     private WineTastingDAO wineTastingDAO;
@@ -143,3 +131,4 @@ public class WineTastingDAOTest {
     };
 
 }
+*/
