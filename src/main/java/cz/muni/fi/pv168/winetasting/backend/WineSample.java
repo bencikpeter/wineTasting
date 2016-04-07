@@ -120,4 +120,42 @@ public class WineSample {
     public void setYear(int year) {
         this.year = year;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WineSample that = (WineSample) o;
+
+        if (year != that.year) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (vintnerFirstName != null ? !vintnerFirstName.equals(that.vintnerFirstName) : that.vintnerFirstName != null)
+            return false;
+        if (vintnerLastName != null ? !vintnerLastName.equals(that.vintnerLastName) : that.vintnerLastName != null)
+            return false;
+        if (variety != null ? !variety.equals(that.variety) : that.variety != null) return false;
+        if (color != that.color) return false;
+        return character == that.character;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (vintnerFirstName != null ? vintnerFirstName.hashCode() : 0);
+        result = 31 * result + (vintnerLastName != null ? vintnerLastName.hashCode() : 0);
+        result = 31 * result + (variety != null ? variety.hashCode() : 0);
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + (character != null ? character.hashCode() : 0);
+        result = 31 * result + year;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "WineSample{" +
+                "id=" + id +
+                '}';
+    }
 }

@@ -65,13 +65,13 @@ public class WineSampleDAOImpl implements WineSampleDAO {
     private WineSample resultSetToWineSample(ResultSet resultSet) throws SQLException {
         WineSample wineSample = new WineSample();
 
-        wineSample.setId(resultSet.getLong("id"));
+        wineSample.setId(resultSet.getLong("ID"));
         wineSample.setVintnerFirstName(resultSet.getString("vintnerFirstName"));
         wineSample.setVintnerLastName(resultSet.getString("vintnerLastName"));
         wineSample.setVariety(resultSet.getString("variety"));
         wineSample.setColor(stringToColor(resultSet.getString("color")));
-        wineSample.setCharacter(stringToWineCharacter(resultSet.getString("character")));
-        wineSample.setYear(resultSet.getInt("year"));
+        wineSample.setCharacter(stringToWineCharacter(resultSet.getString("character_")));
+        wineSample.setYear(resultSet.getInt("year_"));
 
         return wineSample;
     }
@@ -90,7 +90,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
         validate(wineSample);
 
         if (wineSample.getId() != null) {
-           // throw new IllegalArgumentException("id already exists");
+            throw new IllegalArgumentException("id already exists");
         }
 
         try(Connection connection = dataSource.getConnection();
@@ -110,12 +110,9 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             statement.setInt(6, wineSample.getYear());
 
             int addRows = statement.executeUpdate();
-            if (addRows != 1) {
-                throw new ServiceFailureException("createWineSample: number of added rows is not one");
-            }
-            ResultSet keys = statement.getGeneratedKeys();
-            wineSample.setId(keys.getLong(1));
-
+            DBUtils.checkUpdatesCount(addRows, wineSample, true);
+            Long id = DBUtils.getId(statement.getGeneratedKeys());
+            wineSample.setId(id);
         }catch (SQLException ex) {
             throw new ServiceFailureException("error inserting wineSample into db", ex);
         }
@@ -146,9 +143,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             statement.setInt(6, wineSample.getYear());
 
             int updatedRows = statement.executeUpdate();
-            if (updatedRows != 1) {
-                throw new ServiceFailureException("updateWineSample: number of updated rows is not one");
-            }
+            DBUtils.checkUpdatesCount(updatedRows, wineSample, false);
 
         }catch (SQLException ex) {
             throw new ServiceFailureException("error updating wineSample", ex);
@@ -169,12 +164,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             statement.setLong(1, wineSample.getId());
 
             int deletedRows = statement.executeUpdate();
-
-            if (deletedRows == 0) {
-                throw new ServiceFailureException("wineSample not found in db");
-            } else if (deletedRows != 1) {
-                throw new ServiceFailureException("more than one row deleted");
-            }
+            DBUtils.checkUpdatesCount(deletedRows, wineSample, false);
 
         } catch (SQLException ex) {
             throw new ServiceFailureException("error deleting wineSample", ex);
@@ -190,7 +180,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
         }
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT vintnerFirstName," +
+                    "SELECT id," +
+                            "vintnerFirstName," +
                             "vintnerLastName," +
                             "variety," +
                             "color," +
@@ -198,7 +189,6 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "year_ FROM WineSample WHERE id = ?")) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-
             if (resultSet.next()) {
                 WineSample wineSample = resultSetToWineSample(resultSet);
 
@@ -221,7 +211,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT vintnerFirstName," +
+                    "SELECT id," +
+                            "vintnerFirstName," +
                             "vintnerLastName," +
                             "variety," +
                             "color," +
@@ -245,7 +236,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT vintnerFirstName," +
+                    "SELECT id," +
+                            "vintnerFirstName," +
                             "vintnerLastName," +
                             "variety," +
                             "color," +
