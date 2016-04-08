@@ -50,7 +50,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
                 throw new ServiceFailureException("createSession: number of added rows is not one");
             }
             ResultSet keys = statement.getGeneratedKeys();
-            session.setID(keys.getLong(1));
+            session.setID(DBUtils.getId(keys));
 
             //connection.commit();
             //no need to commit - connections by default are in auto commit mode
