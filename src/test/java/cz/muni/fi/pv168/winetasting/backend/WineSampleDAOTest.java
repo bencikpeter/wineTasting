@@ -1,8 +1,12 @@
 package cz.muni.fi.pv168.winetasting.backend;
 
+import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,11 +20,28 @@ import static org.junit.Assert.*;
  */
 public class WineSampleDAOTest {
 
-    private WineSampleDAO manager;
+    private WineSampleDAOImpl manager;
+    private DataSource dataSource;
+
+    private static DataSource prepareDataSource() throws SQLException {
+        EmbeddedDataSource dataSource = new EmbeddedDataSource();
+        // we will use in memory database
+        dataSource.setDatabaseName("memory:winesample-test");
+        // database is created automatically if it does not exist yet
+        dataSource.setCreateDatabase("create");
+        return dataSource;
+    }
 
     @Before
-    public void setUp() {
-        manager = new WineSampleDAOImpl();
+    public void setUp() throws SQLException {
+        dataSource = prepareDataSource();
+        DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("createTables.sql"));
+        manager = new WineSampleDAOImpl(dataSource);
+    }
+
+    @After
+    public void tearDown() throws SQLException {
+        DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("dropTables.sql"));
     }
 
     @Test
@@ -31,7 +52,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.VZH)
                                                         .year(2014)
                                                         .build();
-        wineSample.setId((long) 1);
 
         manager.createWineSample(wineSample);
 
@@ -85,7 +105,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.VZH)
                                                         .year(2014)
                                                         .build();
-        wineSample1.setId((long)1);
         manager.createWineSample(wineSample1);
 
         WineSample wineSample2 = new WineSample.Builder("Chardonnay")
@@ -94,7 +113,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.NZ)
                                                         .year(2013)
                                                         .build();
-        wineSample2.setId((long)2);
         manager.createWineSample(wineSample2);
 
         WineSample wineSample3 = new WineSample.Builder("Alibernet")
@@ -103,7 +121,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.KAB)
                                                         .year(2015)
                                                         .build();
-        wineSample3.setId((long)3);
         manager.createWineSample(wineSample3);
 
         List<WineSample> expected = Arrays.asList(wineSample1,
@@ -128,7 +145,6 @@ public class WineSampleDAOTest {
                                                     .character(WineCharacter.VZH)
                                                     .year(2014)
                                                     .build();
-        expected.setId((long)1);
         manager.createWineSample(expected);
 
         WineSample actual = manager.findWineSampleById((long)1);
@@ -146,7 +162,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.VZH)
                                                         .year(2014)
                                                         .build();
-        wineSample1.setId((long)1);
         manager.createWineSample(wineSample1);
 
         WineSample wineSample2 = new WineSample.Builder("Chardonnay")
@@ -155,7 +170,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.NZ)
                                                         .year(2013)
                                                         .build();
-        wineSample2.setId((long)2);
         manager.createWineSample(wineSample2);
 
         WineSample wineSample3 = new WineSample.Builder("Alibernet")
@@ -164,7 +178,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.KAB)
                                                         .year(2015)
                                                         .build();
-        wineSample3.setId((long)3);
         manager.createWineSample(wineSample3);
 
         WineSample wineSample4 = new WineSample.Builder("Rizling")
@@ -173,7 +186,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.AKO)
                                                         .year(2010)
                                                         .build();
-        wineSample1.setId((long)4);
         manager.createWineSample(wineSample4);
 
         List<WineSample> expected = Arrays.asList(wineSample1,
@@ -197,7 +209,6 @@ public class WineSampleDAOTest {
                                                         .character(WineCharacter.VZH)
                                                         .year(2014)
                                                         .build();
-        wineSample1.setId((long)1);
         manager.createWineSample(wineSample1);
 
         assertFalse(manager.findAllWineSamples().isEmpty());
@@ -219,7 +230,6 @@ public class WineSampleDAOTest {
                                                     .character(WineCharacter.VZH)
                                                     .year(2014)
                                                     .build();
-        expected.setId((long)1);
         manager.createWineSample(expected);
 
         assertFalse(manager.findAllWineSamples().isEmpty());

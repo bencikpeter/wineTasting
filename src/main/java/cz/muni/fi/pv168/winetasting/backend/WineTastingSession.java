@@ -7,12 +7,12 @@ import java.time.LocalDate;
  */
 public class WineTastingSession {
 
-    private Long ID;
-    private String place;
-    private LocalDate date;
+    private Long ID = null;
+    private String place = null;
+    private LocalDate date = null;
 
     public WineTastingSession() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        //throw new UnsupportedOperationException("Not implemented yet");
     }
 
     public LocalDate getDate() {
@@ -37,5 +37,26 @@ public class WineTastingSession {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WineTastingSession that = (WineTastingSession) o;
+
+        if (ID != null ? !ID.equals(that.ID) : that.ID != null) return false;
+        if (place != null ? !place.equals(that.place) : that.place != null) return false;
+        return !(date != null ? !date.equals(that.date) : that.date != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = ID != null ? ID.hashCode() : 0;
+        result = 31 * result + (place != null ? place.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
     }
 }
