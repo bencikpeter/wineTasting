@@ -52,10 +52,8 @@ public class WineTastingDAOTest {
     @Test
     public void createWineTastingSession() throws SQLException {
         WineTastingSession session = new WineTastingSession();
-        //ZonedDateTime date = ZonedDateTime.of(2016,02,10,11,23,1,11,java.time.ZoneId.of("GMT+2"));
         LocalDate date = LocalDate.of(2016,02,10);
         session.setDate(date);
-        //session.setID(new Long(1));
         session.setPlace("somewhere warm");
 
         tastingManager.createSession(session);
@@ -87,32 +85,59 @@ public class WineTastingDAOTest {
 
 
     @Test
-    public void updateSession(){
-        //TODO
+    public void updateSessionTest(){
+        List<WineTastingSession> inDB = generateAndInsertSessions();
+        WineTastingSession toUpdate = inDB.get(0);
+        toUpdate.setPlace("somwhere cold");
+        tastingManager.updateSession(toUpdate);
+
+        List<WineTastingSession> result = tastingManager.findAllSessions();
+        Collections.sort(inDB,comparator);
+        Collections.sort(result,comparator);
+
+        assertEquals("expected and retrieved lists are different",inDB,result);
     }
     @Test
     public void deleteSession(){
-        //TODO
+        List<WineTastingSession> inDB = generateAndInsertSessions();
+        WineTastingSession toDelete = inDB.get(0);
+        tastingManager.deleteSession(toDelete);
+        inDB.remove(toDelete);
+
+        List<WineTastingSession> result = tastingManager.findAllSessions();
+        Collections.sort(inDB,comparator);
+        Collections.sort(result,comparator);
+
+        assertEquals("expected and retrieved lists are different",inDB,result);
     }
 
     @Test
     public void findAllSessions(){
+
+        List<WineTastingSession> expected = generateAndInsertSessions();
+        List<WineTastingSession> result = tastingManager.findAllSessions();
+
+        Collections.sort(expected,comparator);
+        Collections.sort(result,comparator);
+
+        assertEquals("expected and retrieved lists are different",expected,result);
+    }
+
+
+    private List<WineTastingSession> generateAndInsertSessions(){
         WineTastingSession session = new WineTastingSession();
         LocalDate date = LocalDate.of(2016,02,10);
         session.setDate(date);
-        //session.setID(5);
         session.setPlace("somewhere warm");
 
         WineTastingSession session2 = new WineTastingSession();
         LocalDate date2 = LocalDate.of(2016,02,11);
         session2.setDate(date2);
-        //session2.setID(6);
         session2.setPlace("somewhere warm");
 
         WineTastingSession session3 = new WineTastingSession();
         LocalDate date3 = LocalDate.of(2016,02,12);
         session3.setDate(date3);
-        //session3.setID(7);
         session3.setPlace("somewhere warm");
 
         tastingManager.createSession(session);
@@ -124,12 +149,8 @@ public class WineTastingDAOTest {
         expected.add(session2);
         expected.add(session3);
 
-        List<WineTastingSession> result = tastingManager.findAllSessions();
+        return expected;
 
-        Collections.sort(expected,comparator);
-        Collections.sort(result,comparator);
-
-        assertEquals("expected and retrieved lists are different",expected,result);
     }
 
     private static Comparator<WineTastingSession> comparator = new Comparator<WineTastingSession>() {
