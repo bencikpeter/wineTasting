@@ -50,7 +50,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
         return color == null ? null : color.name();
     }
 
-    private static WineColor stringToColor(String color) {
+    public static WineColor stringToColor(String color) {
         return color == null ? null : WineColor.valueOf(color);
     }
 
@@ -58,7 +58,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
         return wineCharacter == null ? null : wineCharacter.name();
     }
 
-    private static WineCharacter stringToWineCharacter(String wineCharacter) {
+    public static WineCharacter stringToWineCharacter(String wineCharacter) {
         return wineCharacter == null ? null : WineCharacter.valueOf(wineCharacter);
     }
 
