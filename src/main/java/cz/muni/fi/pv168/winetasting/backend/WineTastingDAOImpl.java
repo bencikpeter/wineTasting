@@ -117,6 +117,34 @@ public class WineTastingDAOImpl implements WineTastingDAO {
     }
 
     @Override
+    public WineTastingSession findSessionById(Long id) {
+        checkDataSource();
+
+        if (id == null) {
+            throw new IllegalArgumentException("id is null");
+        }
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT id, place, date FROM WineTastingSession WHERE id = ?")) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            WineTastingSession session = null;
+
+            if (resultSet.next()) {
+                session = resultSetToWineTastingSession(resultSet);
+                if (resultSet.next()) {
+                    throw new ServiceFailureException("retrieved two or more sessions with the same id");
+                }
+            }
+            return session;
+        } catch (SQLException ex) {
+            throw new ServiceFailureException("error finding session by id", ex);
+        }
+    }
+
+
+    @Override
     public List<WineTastingSession> findSessionByDate(LocalDate date) {
         checkDataSource();
 

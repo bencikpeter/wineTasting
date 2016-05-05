@@ -12,13 +12,15 @@ import java.util.List;
 
 public interface WineTastingDAO {
 
-    public void createSession(WineTastingSession session);
+    void createSession(WineTastingSession session);
 
-    public void updateSession(WineTastingSession session);
+    void updateSession(WineTastingSession session);
 
-    public void deleteSession(WineTastingSession session);
+    void deleteSession(WineTastingSession session);
 
-    public List<WineTastingSession> findSessionByDate(LocalDate date) throws SQLException; //maybe other type would be appropriate
+    WineTastingSession findSessionById (Long id);
 
-    public List<WineTastingSession> findAllSessions();
+    List<WineTastingSession> findSessionByDate(LocalDate date) throws SQLException; //maybe other type would be appropriate
+
+    List<WineTastingSession> findAllSessions();
 }
