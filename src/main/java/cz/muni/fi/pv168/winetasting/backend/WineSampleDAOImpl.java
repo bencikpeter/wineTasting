@@ -133,7 +133,8 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "variety = ?," +
                             "color = ?," +
                             "character_ = ?," +
-                            "year_ = ?")) {
+                            "year_ = ? " +
+                            "WHERE id = ?")) {
 
             statement.setString(1, wineSample.getVintnerFirstName());
             statement.setString(2, wineSample.getVintnerLastName());
@@ -141,6 +142,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             statement.setString(4, colorToString(wineSample.getColor()));
             statement.setString(5, wineCharacterToString(wineSample.getCharacter()));
             statement.setInt(6, wineSample.getYear());
+            statement.setLong(7, wineSample.getId());
 
             int updatedRows = statement.executeUpdate();
             DBUtils.checkUpdatesCount(updatedRows, wineSample, false);

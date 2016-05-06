@@ -5,17 +5,204 @@
  */
 package cz.muni.fi.pv168.winetasting.frontend;
 
+import cz.muni.fi.pv168.winetasting.backend.WineTastingDAO;
+import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+
 /**
  *
  * @author lukas
  */
 public class AddSession extends javax.swing.JFrame {
-
+    private static WineTastingDAO wineTastingDAO = CommonResources.getWineTastingDAO();
+    private DefaultComboBoxModel wineSessionYearComboBoxModel = new DefaultComboBoxModel<>(years());
+    private DefaultComboBoxModel wineSessionMonthComboBoxModel = new DefaultComboBoxModel<>(months());
+    private DefaultComboBoxModel wineSessionDayComboBoxModel;
+    private MainWindow context;
+    private WineSessionTableModel wineSessionModel;
+    private WineTastingSession wineTastingSession;
+    private String action;
+    private int rowIndex;
     /**
      * Creates new form AddSession
      */
-    public AddSession() {
+    public AddSession(MainWindow context, WineTastingSession wineTastingSession, int rowIndex, String action) {
         initComponents();
+        
+        jComboBox1.setModel(wineSessionYearComboBoxModel);
+        jComboBox2.setModel(wineSessionMonthComboBoxModel);
+        
+        wineSessionDayComboBoxModel = new DefaultComboBoxModel<>(days());
+        jComboBox3.setModel(wineSessionDayComboBoxModel);
+        
+        this.context = context;
+        this.wineTastingSession = wineTastingSession;
+        this.rowIndex = rowIndex;
+        this.action = action;
+        this.wineSessionModel = context.getWineSessionModel();
+        jButton1.setText(action);
+        
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        if (wineTastingSession != null) {
+            jTextField1.setText(wineTastingSession.getPlace());
+            jComboBox1.setSelectedItem(wineTastingSession.getDate().getYear());
+            jComboBox2.setSelectedItem(wineTastingSession.getDate().getMonthValue());
+            jComboBox3.setSelectedItem(wineTastingSession.getDate().getDayOfWeek());
+        }
+    }
+    
+    private class AddSessionWorker extends SwingWorker<WineTastingSession, Integer> {
+
+        @Override
+        protected WineTastingSession doInBackground() throws Exception {
+            //TODO log
+            WineTastingSession session = getWineTastingSessionFromForm();
+            if(session == null){
+                //log error
+                throw new IllegalArgumentException("wrong-enter-data");
+            }
+            wineTastingDAO.createSession(session);
+            return session;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                WineTastingSession session = get();
+                wineSessionModel.addWineSession(session);
+                //log info
+                AddSession.this.dispose();
+            } catch (IllegalArgumentException ex) {
+                warningMessageBox(ex.getMessage());
+                return;
+            } catch (ExecutionException ex) {
+                //TODO log error
+            } catch (InterruptedException ex) {
+                //TODO log error
+                throw new RuntimeException("Operation interrupted in creating new wine session");
+            }
+        } 
+    }
+    
+    private class UpdateSessionWorker extends SwingWorker<WineTastingSession, Integer> {
+
+        @Override
+        protected WineTastingSession doInBackground() throws Exception {
+            //TODO log
+            WineTastingSession session = getWineTastingSessionFromForm();
+            if (session == null){
+                //TODO log error
+                throw new IllegalArgumentException("wrong-enter-data");
+            }
+            wineTastingDAO.updateSession(session);
+            return session;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                WineTastingSession session = get();
+                wineSessionModel.updateWineSession(session, rowIndex);
+                //TODO log info
+                context.getjTableWineSessions().getSelectionModel().clearSelection();
+                context.getWineSessionUpdateButton().setEnabled(false);
+                context.getWineSessionDeleteButtion().setEnabled(false);
+                context.getShowWinesInSessionButton().setEnabled(false);
+                context.getLayoutButton().setEnabled(false);
+                AddSession.this.dispose();
+            } catch (IllegalArgumentException ex) {
+                //TODO log error
+            } catch (ExecutionException ex) {
+                //TODO log
+            } catch (InterruptedException ex) {
+                //TODO log error
+                throw new RuntimeException("Operation interrupted in updating wine session");
+            } 
+        }
+    }
+    
+    
+    private WineTastingSession getWineTastingSessionFromForm() {
+        String place = jTextField1.getText();
+        if (place == null || place.length() == 0) {
+            warningMessageBox("fill place");
+            return null;
+        }
+        LocalDate date = LocalDate.of((Integer)jComboBox1.getSelectedItem(), 
+                                      (Integer)jComboBox2.getSelectedItem(),
+                                      (Integer)jComboBox3.getSelectedItem());
+        if (wineTastingSession == null) {
+            wineTastingSession = new WineTastingSession();
+        }
+        
+        wineTastingSession.setPlace(place);
+        wineTastingSession.setDate(date);
+        return wineTastingSession;        
+    }
+    
+    private void warningMessageBox(String message) {
+        // log
+        JOptionPane.showMessageDialog(rootPane, message, null, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private static Object[] years() {
+        ArrayList<Integer> years_tmp = new ArrayList<Integer>();
+        for(int years = 1980 ; years<=Calendar.getInstance().get(Calendar.YEAR);years++){
+            years_tmp.add(years);
+        }
+        return years_tmp.toArray();
+    }
+    
+    private static Object[] months() {
+        ArrayList<Integer> months_tmp = new ArrayList<Integer>();
+        for(int months = 1 ; months <= 12; months++){
+            months_tmp.add(months);
+        }
+        return months_tmp.toArray();
+    }
+    
+    private Object[] days() {
+        int selected = (Integer) jComboBox2.getSelectedItem();
+        int days = 0;
+        switch (selected) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                days = 31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                days = 30;
+                break;
+            case 2:
+                int year = (Integer) jComboBox1.getSelectedItem();
+                if (year % 4 == 0 ){
+                    days = 29;
+                } else {
+                    days = 28;
+                }
+                break;
+            default:
+                throw new RuntimeException("Non-existing days");
+        }
+        ArrayList<Integer> days_tmp = new ArrayList<Integer>();
+        for(int i = 1; i <= days; i++){
+            days_tmp.add(i);
+        }
+        return days_tmp.toArray();
     }
 
     /**
@@ -45,8 +232,18 @@ public class AddSession extends javax.swing.JFrame {
         jLabel2.setText("Date");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -57,6 +254,11 @@ public class AddSession extends javax.swing.JFrame {
         jLabel5.setText("Day");
 
         jButton1.setText("Add");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,40 +319,27 @@ public class AddSession extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddSession.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddSession.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddSession.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddSession.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        wineSessionDayComboBoxModel = new DefaultComboBoxModel<>(days());
+        jComboBox3.setModel(wineSessionDayComboBoxModel);
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddSession().setVisible(true);
-            }
-        });
-    }
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        wineSessionDayComboBoxModel = new DefaultComboBoxModel<>(days());
+        jComboBox3.setModel(wineSessionDayComboBoxModel);
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (action.equals("add")) {
+            AddSessionWorker worker = new AddSessionWorker();
+            worker.execute();
+        } else if (action.equals("update")) {
+            UpdateSessionWorker worker = new UpdateSessionWorker();
+            worker.execute();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

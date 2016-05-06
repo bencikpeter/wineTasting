@@ -17,6 +17,10 @@ public class WineTastingManagerImpl implements WineTastingManager{
 
     private DataSource dataSource;
 
+    public WineTastingManagerImpl() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -135,7 +139,7 @@ public class WineTastingManagerImpl implements WineTastingManager{
             List<WineSample> wines = new ArrayList<>();
             while (resultSet.next()) {
                 WineSampleDAO manager = new WineSampleDAOImpl(dataSource);
-                WineSample sample = manager.findWineSampleById(resultSet.getLong("id"));
+                WineSample sample = manager.findWineSampleById(resultSet.getLong("sampleId"));
                 if (sample != null) {
                     wines.add(sample);
                 }

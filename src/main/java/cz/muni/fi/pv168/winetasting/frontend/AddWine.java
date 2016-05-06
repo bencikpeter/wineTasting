@@ -5,19 +5,181 @@
  */
 package cz.muni.fi.pv168.winetasting.frontend;
 
+import cz.muni.fi.pv168.winetasting.backend.WineCharacter;
+import cz.muni.fi.pv168.winetasting.backend.WineColor;
+import cz.muni.fi.pv168.winetasting.backend.WineSample;
+import cz.muni.fi.pv168.winetasting.backend.WineSampleDAO;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+
 /**
  *
  * @author lukas
  */
 public class AddWine extends javax.swing.JFrame {
-
+    private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
+    private DefaultComboBoxModel wineSampleCharacterComboBoxModel = new DefaultComboBoxModel<>(WineCharacter.values());
+    private DefaultComboBoxModel wineSampleColorComboBoxModel = new DefaultComboBoxModel<>(WineColor.values());
+    private DefaultComboBoxModel wineSampleYearComboBoxModel = new DefaultComboBoxModel<>(years());
+    private MainWindow context;
+    private WineSampleTableModel wineSampleModel;
+    private WineSample wineSample;
+    private String action;
+    private int rowIndex;
+    
     /**
      * Creates new form AddWine
      */
-    public AddWine() {
+    public AddWine(MainWindow context, WineSample wineSample, int rowIndex, String action) {
         initComponents();
+       
+        jComboBox1.setModel(wineSampleCharacterComboBoxModel);
+        jComboBox2.setModel(wineSampleColorComboBoxModel);
+        jComboBox3.setModel(wineSampleYearComboBoxModel);
+        
+        this.context = context;
+        this.wineSample = wineSample;
+        this.rowIndex = rowIndex;
+        this.action = action;
+        this.wineSampleModel = context.getWineSampleModel();
+        jButton1.setText(action);
+        
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        if (wineSample != null) {
+            jTextField1.setText(wineSample.getVintnerFirstName());
+            jTextField2.setText(wineSample.getVintnerLastName());
+            jTextField3.setText(wineSample.getVariety());
+            jComboBox1.setSelectedItem(wineSample.getCharacter());
+            jComboBox2.setSelectedItem(wineSample.getColor());
+            jComboBox3.setSelectedItem(wineSample.getYear());
+        }
+        this.setVisible(true);
+    }
+    
+    private class AddWineWorker extends SwingWorker<WineSample, Integer> {
+
+        @Override
+        protected WineSample doInBackground() throws Exception {
+            // log
+            WineSample wine = getWineSampleFromForm();
+            if (wine == null) {
+                // log error
+                throw new IllegalArgumentException("wrong-enter-data");
+            }
+            wineSampleDAO.createWineSample(wine);
+            return wine;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                WineSample wine = get();
+                wineSampleModel.addWineSample(wine);
+                // log info
+                AddWine.this.dispose();
+            } catch (IllegalArgumentException ex) {
+                warningMessageBox(ex.getMessage());
+                return;
+            } catch (ExecutionException ex) {
+                // log error
+            } catch (InterruptedException ex) {
+                // log error
+                throw new RuntimeException("Operation interrupted in creating new wine sample");
+            }
+        }
+        
+    }
+    
+    private class UpdateWineWorker extends SwingWorker<WineSample, Integer> {
+
+        @Override
+        protected WineSample doInBackground() throws Exception {
+            // log
+            WineSample wine = getWineSampleFromForm();
+            if (wine == null) {
+                //log error
+                throw new IllegalArgumentException("wrong-enter-data");
+            }
+            wineSampleDAO.updateWineSample(wine);
+            return wine;
+        }
+        
+        @Override
+        protected void done() {
+            try {
+                WineSample wine = get();
+                wineSampleModel.updateWineSample(wine, rowIndex);
+                //log info 
+                context.getjTableWineSamples().getSelectionModel().clearSelection();
+                context.getWineSampleUpdateButton().setEnabled(false);
+                context.getWineSampleDeleteButton().setEnabled(false);
+                AddWine.this.dispose();
+            } catch (IllegalArgumentException ex) {
+                // log error
+            } catch (ExecutionException ex){
+                //log
+            } catch (InterruptedException ex) {
+                // log error
+                throw new RuntimeException("Operation interrupted in updating wine sample");
+            }
+        }
+        
+    }
+    
+    private WineSample getWineSampleFromForm() {
+        
+        String firstName = jTextField1.getText();
+        if (firstName == null || firstName.length() == 0) {
+            warningMessageBox("fill first name");
+            return null;
+        }
+        
+        String lastName = jTextField2.getText();
+        if (lastName == null || lastName.length() == 0) {
+            warningMessageBox("fill last name");
+            return null;
+        }
+        
+        String variety = jTextField3.getText();
+        if (variety == null || variety.length() == 0) {
+            warningMessageBox("fill variety");
+            return null;
+        }
+        WineCharacter character = (WineCharacter)jComboBox1.getSelectedItem();
+        WineColor color = (WineColor)jComboBox2.getSelectedItem();
+        int year = (Integer)jComboBox3.getSelectedItem();
+        
+        if (wineSample == null) {
+            wineSample = new WineSample();
+        }
+        
+        wineSample.setVintnerFirstName(firstName);
+        wineSample.setVintnerLastName(lastName);
+        wineSample.setVariety(variety);
+        wineSample.setCharacter(character);
+        wineSample.setColor(color);
+        wineSample.setYear(year);
+        return wineSample;        
+    }
+    
+    private void warningMessageBox(String message) {
+        // log
+        JOptionPane.showMessageDialog(rootPane, message, null, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    private static Object[] years() {
+        ArrayList<Integer> years_tmp = new ArrayList<Integer>();
+        for(int years = 1980 ; years<=Calendar.getInstance().get(Calendar.YEAR);years++){
+            years_tmp.add(years);
+        }
+        return years_tmp.toArray();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,47 +306,20 @@ public class AddWine extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (action.equals("add")) {
+            AddWineWorker worker = new AddWineWorker();
+            worker.execute();
+        } else if (action.equals("update")) {
+            UpdateWineWorker worker = new UpdateWineWorker();
+            worker.execute();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddWine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddWine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddWine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddWine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddWine().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
