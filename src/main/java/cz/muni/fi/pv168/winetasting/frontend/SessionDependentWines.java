@@ -5,12 +5,15 @@
  */
 package cz.muni.fi.pv168.winetasting.frontend;
 
+import cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException;
 import cz.muni.fi.pv168.winetasting.backend.WineSample;
 import cz.muni.fi.pv168.winetasting.backend.WineSampleDAO;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingManager;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /**
@@ -21,16 +24,16 @@ public class SessionDependentWines extends javax.swing.JFrame {
     private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
     private static WineTastingManager wineTastingManager = CommonResources.getWineTastingManager();
     private MainWindow context;
-    private WineSampleTableModel wineSampleModel;
+    private WinesInSessionTableModel wineSampleModel;
     private WineTastingSession wineSession;
     private int rowIndex;
-    private FindWineSamplesBySession findWineSamplesBySession;
+    private FindWineSamplesBySessionWorker findWineSamplesBySession;
     
-    private class FindWineSamplesBySession extends SwingWorker<List<WineSample>, Integer> {
+    private class FindWineSamplesBySessionWorker extends SwingWorker<List<WineSample>, Integer> {
 
         private WineTastingSession session;
 
-        public FindWineSamplesBySession(WineTastingSession session) {
+        public FindWineSamplesBySessionWorker(WineTastingSession session) {
             this.session = session;
         }
         
@@ -51,7 +54,96 @@ public class SessionDependentWines extends javax.swing.JFrame {
                 throw new RuntimeException("Operation interrupted in FindWineSamplesBySession");
             }
         }   
-}
+    }
+    
+    private class AssignRatingToWineWorker extends SwingWorker<WineSample, Integer> {
+
+        @Override
+        protected WineSample doInBackground() throws Exception {
+            //TODO log
+            rowIndex = jTableWineSamples.getSelectedRow();
+            WineSample wineSample = wineSampleModel.getWineSample(rowIndex);
+            wineSample.setRating(jSlider1.getValue());
+            wineTastingManager.assignRatingToWine(wineSample, wineSession, wineSample.getRating());
+            return wineSample;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                WineSample wine = get();
+                wineSampleModel.updateWineSample(wine, rowIndex);
+                //TODO log info
+                jTableWineSamples.getSelectionModel().clearSelection();
+                jSlider1.setEnabled(false);
+                jButton2.setEnabled(false);
+                jButton1.setEnabled(false);
+            } catch (IllegalArgumentException ex) {
+                // log error
+            } catch (ExecutionException ex){
+                //log
+            } catch (InterruptedException ex) {
+                // log error
+                throw new RuntimeException("Operation interrupted in AssignRatingToWineWorker");
+            }
+        }
+        
+    }
+    
+    private class RemoveWinesFromSessionWorker extends SwingWorker <int [], Void> {
+
+        @Override
+        protected int[] doInBackground() throws Exception {
+            int[] selectedRows = jTableWineSamples.getSelectedRows();
+            List<Integer> toDeleteRows = new ArrayList<>();
+            if (selectedRows.length >= 0) {
+                for (int selectedRow : selectedRows) {
+                    WineSample wineSample = wineSampleModel.getWineSample(selectedRow);
+                    try {
+                        wineTastingManager.removeWineFromSession(wineSession, wineSample);
+                        toDeleteRows.add(selectedRow);
+                    } catch (Exception ex) {
+                        throw new ServiceFailureException("error removing wine from session");
+                    }
+                }
+                jTableWineSamples.getSelectionModel().clearSelection();
+                jSlider1.setEnabled(false);
+                jButton1.setEnabled(false);
+                jButton2.setEnabled(false);
+                return convert(toDeleteRows);
+            }
+            jTableWineSamples.getSelectionModel().clearSelection();
+            jSlider1.setEnabled(false);
+            jButton1.setEnabled(false);
+            jButton2.setEnabled(false);
+            return null;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                int[] indexes = get();
+                //log debug
+                if (indexes != null && indexes.length != 0) {
+                    wineSampleModel.deleteWineSamples(indexes);
+                }
+            } catch (ExecutionException ex) {
+                JOptionPane.showMessageDialog(rootPane, "cannot-remove-wine-sample-from-session");
+                // log error
+            } catch (InterruptedException ex) {
+                //log error
+                throw new RuntimeException("Operation interrupted.. RemoveWinesFromSessionWorker");
+            }
+        } 
+    }
+    
+    private int[] convert(List<Integer> o) {
+        int[] result = new int[o.size()];
+        for (int i = 0; i < o.size(); i++) {
+            result[i] = o.get(i);
+        }
+        return result;
+    }
     
     /**
      * Creates new form SessionDependentWines
@@ -60,9 +152,9 @@ public class SessionDependentWines extends javax.swing.JFrame {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         wineSession = wineTastingSession;
-        wineSampleModel = (WineSampleTableModel) jTableWineSamples.getModel();  
+        wineSampleModel = (WinesInSessionTableModel) jTableWineSamples.getModel();  
         
-        findWineSamplesBySession = new FindWineSamplesBySession(wineSession);
+        findWineSamplesBySession = new FindWineSamplesBySessionWorker(wineSession);
         findWineSamplesBySession.execute();
     }
 
@@ -84,15 +176,37 @@ public class SessionDependentWines extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTableWineSamples.setModel(new WineSampleTableModel());
+        jTableWineSamples.setModel(new WinesInSessionTableModel());
+        jTableWineSamples.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTableWineSamplesMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableWineSamples);
 
         jButton1.setText("Remove selected");
+        jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Rate selected wine");
         jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Add Wines");
+
+        jSlider1.setMajorTickSpacing(10);
+        jSlider1.setMinorTickSpacing(1);
+        jSlider1.setPaintLabels(true);
+        jSlider1.setPaintTicks(true);
+        jSlider1.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,18 +228,43 @@ public class SessionDependentWines extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTableWineSamplesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWineSamplesMouseReleased
+        if (jTableWineSamples.getSelectedRowCount() != 1) {
+            jButton2.setEnabled(false);
+            jSlider1.setEnabled(false);
+        } else {
+            jButton2.setEnabled(true);
+            jSlider1.setEnabled(true);
+        }
+        jButton1.setEnabled(true);
+    }//GEN-LAST:event_jTableWineSamplesMouseReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        AssignRatingToWineWorker worker = new AssignRatingToWineWorker();
+        worker.execute();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        RemoveWinesFromSessionWorker worker = new RemoveWinesFromSessionWorker();
+        worker.execute();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

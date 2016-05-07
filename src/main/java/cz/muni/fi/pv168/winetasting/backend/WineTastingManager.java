@@ -13,6 +13,7 @@ public interface WineTastingManager {
      */
     WinesLayout generateWinesLayout(WineTastingSession session); // maybe should not return void, need to reconsider
 
+    void removeWineFromSession(WineTastingSession session, WineSample sample);
     /**
      * assign wine sample to specific session
      * this information needs to be stored in database table representing sample-session relation

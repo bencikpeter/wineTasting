@@ -12,6 +12,7 @@ public class WineSample {
     private WineColor color;
     private WineCharacter character;
     private int year;
+    private int rating;
 
     public static class Builder{
         private String vintnerFirstName;
@@ -119,6 +120,14 @@ public class WineSample {
 
     public void setYear(int year) {
         this.year = year;
+    }
+    
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @Override

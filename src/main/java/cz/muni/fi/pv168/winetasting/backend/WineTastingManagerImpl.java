@@ -133,13 +133,14 @@ public class WineTastingManagerImpl implements WineTastingManager{
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT  sampleId FROM WineTasting WHERE sessionId = ?")) {
+                    "SELECT  sampleId, rating FROM WineTasting WHERE sessionId = ?")) {
             statement.setLong(1, session.getID());
             ResultSet resultSet = statement.executeQuery();
             List<WineSample> wines = new ArrayList<>();
             while (resultSet.next()) {
                 WineSampleDAO manager = new WineSampleDAOImpl(dataSource);
                 WineSample sample = manager.findWineSampleById(resultSet.getLong("sampleId"));
+                sample.setRating(resultSet.getInt("rating"));
                 if (sample != null) {
                     wines.add(sample);
                 }
@@ -147,6 +148,26 @@ public class WineTastingManagerImpl implements WineTastingManager{
             return wines;
         } catch (SQLException ex) {
             throw new ServiceFailureException("error finding all wines in specific session", ex);
+        }
+    }
+
+    @Override
+    public void removeWineFromSession(WineTastingSession session, WineSample sample) {
+        checkDataSource();
+        if (session == null) {
+            throw new IllegalArgumentException("session is null");
+        }
+        
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROm WineTasting WHERE sessionId = ? AND sampleId = ?")) {
+            statement.setLong(1, session.getID());
+            statement.setLong(2, sample.getId());
+            
+            int deletedRows = statement.executeUpdate();
+            DBUtils.checkUpdatesCount(deletedRows, session, false);
+        } catch (SQLException ex) {
+            throw new ServiceFailureException("error removing wine from specific session", ex);
         }
     }
 }
