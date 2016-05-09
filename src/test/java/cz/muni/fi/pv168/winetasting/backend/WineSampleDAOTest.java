@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -254,7 +255,40 @@ public class WineSampleDAOTest {
 
     @Test
     public void findAllUnsessionedWines() {
-        //TODO
+        WineSample wineSample = new WineSample.Builder("Rizling")
+                .vintnerName("Tomovic", "Lukas")
+                .color(WineColor.WHITE)
+                .character(WineCharacter.VZH)
+                .year(2014)
+                .build();
+
+        manager.createWineSample(wineSample);
+
+        WineSample wineSample2 = new WineSample.Builder("Chardonnay")
+                .vintnerName("Peter", "Bencik")
+                .color(WineColor.WHITE)
+                .character(WineCharacter.VZH)
+                .year(2013)
+                .build();
+
+        manager.createWineSample(wineSample2);
+
+        WineTastingSession session = new WineTastingSession();
+        LocalDate date = LocalDate.of(2016,02,10);
+        session.setDate(date);
+        session.setPlace("somewhere warm");
+
+        WineTastingDAO tastingManagerDAO = new WineTastingDAOImpl(dataSource);
+
+        tastingManagerDAO.createSession(session);
+
+        WineTastingManager tastingManager = new WineTastingManagerImpl(dataSource);
+        tastingManager.assignWineToSession(session,wineSample);
+
+        List<WineSample> unsessionedSamples = manager.findAllUnsessionedWines();
+
+        assertThat("Only one wine should be selected",unsessionedSamples.size(), is(equalTo(1)));
+        assertThat("Wrong wine selected",unsessionedSamples.get(0),is(equalTo(wineSample2)));
     }
 
     private static Comparator<WineSample> idComparator = new Comparator<WineSample>() {
