@@ -264,14 +264,14 @@ public class WineSampleDAOImpl implements WineSampleDAO {
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT id," +
+                    "SELECT WineSample.id as id," +
                             "vintnerFirstName," +
                             "vintnerLastName," +
                             "variety," +
                             "color," +
                             "character_," +
-                            "year_ FROM WineSample INNER JOIN WineTasting" +
-                            "ON WineSample.id=WineTasting.sampleID")) {
+                            "year_ FROM WineSample INNER JOIN WineTasting " +
+                            "ON WineSample.id = WineTasting.sampleID")) {
             List<WineSample> allWineSamples = findAllWineSamples();
             ResultSet resultSet = statement.executeQuery();
 
