@@ -221,7 +221,7 @@ public class WineSampleDAOTest {
     }
 
     @Test
-    public  void updateWineSample() {
+    public void updateWineSample() {
         assertTrue(manager.findAllWineSamples().isEmpty());
 
         WineSample expected = new WineSample.Builder("Rizling")
@@ -250,6 +250,11 @@ public class WineSampleDAOTest {
                                                         is(equalTo(actual.getVintnerFirstName())));
         assertThat("vintner last name is not updated", expected.getVintnerLastName(),
                                                        is(equalTo(actual.getVintnerLastName())));
+    }
+
+    @Test
+    public void findAllUnsessionedWines() {
+        //TODO
     }
 
     private static Comparator<WineSample> idComparator = new Comparator<WineSample>() {

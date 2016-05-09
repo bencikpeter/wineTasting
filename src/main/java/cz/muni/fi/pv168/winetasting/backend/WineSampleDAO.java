@@ -45,5 +45,11 @@ public interface WineSampleDAO {
      */
     void updateWineSample(WineSample wineSample);
 
+    /**
+     * gets all wines from database which are not assigned to any session
+     * @return List<WineSample>
+     */
+    List<WineSample> findAllUnsessionedWines();
+
 
 }

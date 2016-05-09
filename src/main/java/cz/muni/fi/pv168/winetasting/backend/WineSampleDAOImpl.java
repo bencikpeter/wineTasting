@@ -257,4 +257,33 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             throw new ServiceFailureException("Error retrieving wineSamples by variety " + variety, ex);
         }
     }
+
+    @Override
+    public List<WineSample> findAllUnsessionedWines(){
+        checkDataSource();
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT id," +
+                            "vintnerFirstName," +
+                            "vintnerLastName," +
+                            "variety," +
+                            "color," +
+                            "character_," +
+                            "year_ FROM WineSample INNER JOIN WineTasting" +
+                            "ON WineSample.id=WineTasting.sampleID")) {
+            List<WineSample> allWineSamples = findAllWineSamples();
+            ResultSet resultSet = statement.executeQuery();
+
+            List<WineSample> sessionedWineSamples = new ArrayList<>();
+            while (resultSet.next()) {
+                sessionedWineSamples.add(resultSetToWineSample(resultSet));
+            }
+
+            allWineSamples.removeAll(sessionedWineSamples);
+            return allWineSamples;
+        } catch (SQLException ex) {
+            throw new ServiceFailureException("Error retrieving unsessioned wine samples", ex);
+        }
+    }
 }
