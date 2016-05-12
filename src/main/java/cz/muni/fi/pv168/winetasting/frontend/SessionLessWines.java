@@ -5,19 +5,105 @@
  */
 package cz.muni.fi.pv168.winetasting.frontend;
 
+import cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException;
+import cz.muni.fi.pv168.winetasting.backend.WineSample;
+import cz.muni.fi.pv168.winetasting.backend.WineSampleDAO;
+import cz.muni.fi.pv168.winetasting.backend.WineTastingManager;
+import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+
 /**
  *
  * @author lukas
  */
 public class SessionLessWines extends javax.swing.JFrame {
+    private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
+    private static WineTastingManager manager = CommonResources.getWineTastingManager();
+    private SessionDependentWines context;
+    private WineSampleTableModel wineSampleModel;
+    private WineTastingSession wineSession;
+    private int rowIndex;
 
     /**
      * Creates new form SessionLessWines
      */
-    public SessionLessWines() {
+    public SessionLessWines(SessionDependentWines context, WineTastingSession session) {
         initComponents();
+        this.context = context;
+        wineSession = session;
+        wineSampleModel = (WineSampleTableModel) jWineTable.getModel();
+        FindUnsessionedWinesWorker worker = new FindUnsessionedWinesWorker();
+        worker.execute();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    private class FindUnsessionedWinesWorker extends SwingWorker<List<WineSample>, Integer> {
+
+        @Override
+        protected List<WineSample> doInBackground() throws Exception {
+            return wineSampleDAO.findAllUnsessionedWines();
+        }
+
+        @Override
+        protected void done() {
+            try {
+                //TODO log debug
+                wineSampleModel.setWineSamples(get());
+            }catch(ExecutionException ex) {
+         //TODO   log
+            } catch (InterruptedException ex) {
+         //TODO   log
+                throw new RuntimeException("Operation interrupted in FindUnsessionedWinesWorker");
+            }
+        }
+    }
+    
+    private class AssignWinesToSessionWorker extends SwingWorker<List<WineSample>, Void> {
+
+        @Override
+        protected List<WineSample> doInBackground() throws Exception {
+            int [] selectedRows = jWineTable.getSelectedRows();
+            List<WineSample> samples = new ArrayList<>();
+            if ( selectedRows.length >= 0 ) {
+                for (int selectedRow : selectedRows) {
+                    WineSample wineSample = wineSampleModel.getWineSample(selectedRow);
+                    samples.add(wineSample);
+                    try {
+                        manager.assignWineToSession(wineSession, wineSample);
+                    } catch (Exception ex) {
+                        throw new ServiceFailureException(wineSample.toString());
+                    }
+                }
+            }
+            jWineTable.getSelectionModel().clearSelection();
+            return samples;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                // log debug
+                List<WineSample> list = get();
+                WinesInSessionTableModel model = context.getWineSampleModel();
+                for (WineSample wine : list) {
+                    model.addWineSample(wine);
+                }
+                SessionLessWines.this.dispose();
+            } catch (ExecutionException ex) {
+                JOptionPane.showMessageDialog(rootPane, "cannot-add-wine-to-session");
+                // log error
+            } catch (InterruptedException ex) {
+                //log error
+                throw new RuntimeException("Operation interrupted.. AssignWinesToSessionWorker");
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,12 +114,27 @@ public class SessionLessWines extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
+        jWineTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jWineTable.setModel(new WineSampleTableModel());
+        jWineTable.setToolTipText("");
+        jWineTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jWineTableMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jWineTable);
+
         jButton1.setText("Add selected");
         jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -53,43 +154,20 @@ public class SessionLessWines extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SessionLessWines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SessionLessWines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SessionLessWines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SessionLessWines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AssignWinesToSessionWorker worker = new AssignWinesToSessionWorker();
+        worker.execute();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SessionLessWines().setVisible(true);
-            }
-        });
-    }
+    private void jWineTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jWineTableMouseReleased
+        if (jWineTable.getSelectedRowCount() > 0) {
+            jButton1.setEnabled(true);
+        }
+    }//GEN-LAST:event_jWineTableMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jWineTable;
     // End of variables declaration//GEN-END:variables
 }

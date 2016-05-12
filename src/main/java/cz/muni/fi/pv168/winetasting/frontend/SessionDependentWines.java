@@ -28,6 +28,11 @@ public class SessionDependentWines extends javax.swing.JFrame {
     private WineTastingSession wineSession;
     private int rowIndex;
     private FindWineSamplesBySessionWorker findWineSamplesBySession;
+
+    public WinesInSessionTableModel getWineSampleModel() {
+        return wineSampleModel;
+    }
+    
     
     private class FindWineSamplesBySessionWorker extends SwingWorker<List<WineSample>, Integer> {
 
@@ -201,6 +206,11 @@ public class SessionDependentWines extends javax.swing.JFrame {
         });
 
         jButton3.setText("Add Wines");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jSlider1.setMajorTickSpacing(10);
         jSlider1.setMinorTickSpacing(1);
@@ -265,6 +275,14 @@ public class SessionDependentWines extends javax.swing.JFrame {
         RemoveWinesFromSessionWorker worker = new RemoveWinesFromSessionWorker();
         worker.execute();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SessionLessWines(SessionDependentWines.this, wineSession).setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

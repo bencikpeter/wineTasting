@@ -647,27 +647,31 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 36, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 62, Short.MAX_VALUE))))
         );
 
         jTabbedPane2.addTab("Sessions", jPanel5);
@@ -686,52 +690,6 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jButton7.setEnabled(false);
-        jButton8.setEnabled(false);
-        jButton9.setEnabled(false);
-        jButton15.setEnabled(false);
-        findAllWineSessionsWorker = new FindAllWineSessionsWorker();
-        findAllWineSessionsWorker.execute();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jTextField1.setText(null);
-        jTextField2.setText(null);
-        jButton12.setEnabled(false);
-        jButton13.setEnabled(false);
-        findAllWineSamplesWorker = new FindAllWineSamplesWorker();
-        findAllWineSamplesWorker.execute();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddWine(MainWindow.this, null, -1, "add").setVisible(true);
-            }
-        });
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        String variety = jTextField1.getText();
-        if (variety == null || variety.length() == 0) {
-            findAllWineSamplesWorker = new FindAllWineSamplesWorker();
-            findAllWineSamplesWorker.execute();
-            return;
-        }
-        FindWineSamplesByVarietyWorker worker = new FindWineSamplesByVarietyWorker(variety);
-        worker.execute();
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                int selectedRow = jTableWineSamples.getSelectedRow();
-                new AddWine(MainWindow.this, wineSampleModel.getWineSample(selectedRow), selectedRow, "update");
-            }
-        });
-    }//GEN-LAST:event_jButton12ActionPerformed
-
     private void jTableWineSamplesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWineSamplesMouseReleased
         if (jTableWineSamples.getSelectedRowCount() != 1) {
             jButton12.setEnabled(false);
@@ -746,6 +704,88 @@ public class MainWindow extends javax.swing.JFrame {
         worker.execute();
     }//GEN-LAST:event_jButton13ActionPerformed
 
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                int selectedRow = jTableWineSamples.getSelectedRow();
+                new AddWine(MainWindow.this, wineSampleModel.getWineSample(selectedRow), selectedRow, "update");
+            }
+        });
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        String variety = jTextField1.getText();
+        if (variety == null || variety.length() == 0) {
+            findAllWineSamplesWorker = new FindAllWineSamplesWorker();
+            findAllWineSamplesWorker.execute();
+            return;
+        }
+        FindWineSamplesByVarietyWorker worker = new FindWineSamplesByVarietyWorker(variety);
+        worker.execute();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AddWine(MainWindow.this, null, -1, "add").setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jTextField1.setText(null);
+        jTextField2.setText(null);
+        jButton12.setEnabled(false);
+        jButton13.setEnabled(false);
+        findAllWineSamplesWorker = new FindAllWineSamplesWorker();
+        findAllWineSamplesWorker.execute();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                int selectedRow = jTableWineSessions.getSelectedRow();
+                new SessionDependentWines(MainWindow.this, wineSessionModel.getWineTastingSession(selectedRow), selectedRow).setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        this.wineSessionDayComboBoxModel = new DefaultComboBoxModel<>(days());
+        jComboBox3.setModel(wineSessionDayComboBoxModel);
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        this.wineSessionDayComboBoxModel = new DefaultComboBoxModel<>(days());
+        jComboBox3.setModel(wineSessionDayComboBoxModel);
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                int selectedRow = jTableWineSessions.getSelectedRow();
+                new AddSession(MainWindow.this, wineSessionModel.getWineTastingSession(selectedRow), selectedRow, "update").setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        DeleteWineSessionWorker worker = new DeleteWineSessionWorker();
+        worker.execute();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        LocalDate date = LocalDate.of((Integer)jComboBox1.getSelectedItem(),
+            (Integer)jComboBox2.getSelectedItem(),
+            (Integer)jComboBox3.getSelectedItem());
+        jButton7.setEnabled(false);
+        jButton8.setEnabled(false);
+        jButton9.setEnabled(false);
+        jButton15.setEnabled(false);
+        FindWineSessionsByDate worker = new FindWineSessionsByDate(date);
+        worker.execute();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -754,10 +794,14 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
-        this.wineSessionDayComboBoxModel = new DefaultComboBoxModel<>(days());
-        jComboBox3.setModel(wineSessionDayComboBoxModel);
-    }//GEN-LAST:event_jComboBox2ItemStateChanged
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jButton7.setEnabled(false);
+        jButton8.setEnabled(false);
+        jButton9.setEnabled(false);
+        jButton15.setEnabled(false);
+        findAllWineSessionsWorker = new FindAllWineSessionsWorker();
+        findAllWineSessionsWorker.execute();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTableWineSessionsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableWineSessionsMouseReleased
         if (jTableWineSessions.getSelectedRowCount() != 1) {
@@ -771,46 +815,6 @@ public class MainWindow extends javax.swing.JFrame {
         }
         jButton8.setEnabled(true);
     }//GEN-LAST:event_jTableWineSessionsMouseReleased
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        DeleteWineSessionWorker worker = new DeleteWineSessionWorker();
-        worker.execute();
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-           public void run() {
-               int selectedRow = jTableWineSessions.getSelectedRow();
-               new AddSession(MainWindow.this, wineSessionModel.getWineTastingSession(selectedRow), selectedRow, "update").setVisible(true);
-           } 
-        });
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        this.wineSessionDayComboBoxModel = new DefaultComboBoxModel<>(days());
-        jComboBox3.setModel(wineSessionDayComboBoxModel);
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        LocalDate date = LocalDate.of((Integer)jComboBox1.getSelectedItem(), 
-                                      (Integer)jComboBox2.getSelectedItem(),
-                                      (Integer)jComboBox3.getSelectedItem());
-        jButton7.setEnabled(false);
-        jButton8.setEnabled(false);
-        jButton9.setEnabled(false);
-        jButton15.setEnabled(false);
-        FindWineSessionsByDate worker = new FindWineSessionsByDate(date);
-        worker.execute();
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                int selectedRow = jTableWineSessions.getSelectedRow();
-                new SessionDependentWines(MainWindow.this, wineSessionModel.getWineTastingSession(selectedRow), selectedRow).setVisible(true);
-            }
-        });
-    }//GEN-LAST:event_jButton15ActionPerformed
 
     /**
      * @param args the command line arguments
