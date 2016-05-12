@@ -40,13 +40,13 @@ public class WineTastingDAOTest {
     @Before
     public void setUp() throws SQLException {
         dataSource = prepareDataSource();
-        DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("createTables.sql"));
+        DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/createTables.sql"));
         tastingManager = new WineTastingDAOImpl(dataSource);
     }
 
     @After
     public void tearDown() throws SQLException {
-        DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("dropTables.sql"));
+        DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/dropTables.sql"));
     }
 
     @Test
