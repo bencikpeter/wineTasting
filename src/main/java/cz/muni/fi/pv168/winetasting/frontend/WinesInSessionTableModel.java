@@ -25,6 +25,8 @@ public class WinesInSessionTableModel extends AbstractTableModel{
     //WHY??
     final static Logger log = LoggerFactory.getLogger(WinesInSessionTableModel.class);
     
+    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts");
+    
     private List<WineSample> wineSamples = new ArrayList<>();
 
     @Override
@@ -85,19 +87,26 @@ public class WinesInSessionTableModel extends AbstractTableModel{
     public String getColumnName(int column) {
         switch ( column ) {
             case 0:
-                return "first name";
+                //return "first name";
+                return bundle.getString("First Name");
             case 1:
-                return "last name";
+                //return "last name";
+                return bundle.getString("Surname");
             case 2:
-                return "variety";
+                //return "variety";
+                return bundle.getString("Variety");
             case 3:
-                return "color";
+                //return "color";
+                return bundle.getString("Color");
             case 4:
-                return "character";
+                //return "character";
+                return bundle.getString("Charakter");
             case 5:
-                return "year";
+                //return "year";
+                return bundle.getString("Year");
             case 6:
-                return "rating";
+                //return "rating";
+                return bundle.getString("Rating");
             default:
                 throw new IllegalArgumentException("column incorrect index");
         }

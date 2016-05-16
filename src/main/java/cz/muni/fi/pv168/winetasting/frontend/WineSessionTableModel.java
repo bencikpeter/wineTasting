@@ -24,6 +24,8 @@ public class WineSessionTableModel extends AbstractTableModel {
     //WHY??
     final static Logger log = LoggerFactory.getLogger(WineSessionTableModel.class);
     
+    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts");
+    
     private List<WineTastingSession> wineSessions = new ArrayList<>();
     
     @Override
@@ -94,9 +96,11 @@ public class WineSessionTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "place";
+                //return "place";
+                return bundle.getString("Place");
             case 1:
-                return "date";
+                //return "date";
+                return bundle.getString("Date");
             default:
                 throw new IllegalArgumentException("columnIndex");
         }
