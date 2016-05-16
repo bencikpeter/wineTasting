@@ -6,6 +6,9 @@
 package cz.muni.fi.pv168.winetasting.frontend;
 
 import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ import javax.swing.table.AbstractTableModel;
 public class WineSessionTableModel extends AbstractTableModel {
     
     //TODO here should be logger
+    //WHY??
+    final static Logger log = LoggerFactory.getLogger(WineSessionTableModel.class);
     
     private List<WineTastingSession> wineSessions = new ArrayList<>();
     

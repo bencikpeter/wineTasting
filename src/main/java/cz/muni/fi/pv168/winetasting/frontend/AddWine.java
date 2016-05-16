@@ -9,6 +9,9 @@ import cz.muni.fi.pv168.winetasting.backend.WineCharacter;
 import cz.muni.fi.pv168.winetasting.backend.WineColor;
 import cz.muni.fi.pv168.winetasting.backend.WineSample;
 import cz.muni.fi.pv168.winetasting.backend.WineSampleDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -21,6 +24,10 @@ import javax.swing.SwingWorker;
  * @author lukas
  */
 public class AddWine extends javax.swing.JFrame {
+
+    final static Logger log = LoggerFactory.getLogger(AddWine.class);
+
+
     private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
     private DefaultComboBoxModel wineSampleCharacterComboBoxModel = new DefaultComboBoxModel<>(WineCharacter.values());
     private DefaultComboBoxModel wineSampleColorComboBoxModel = new DefaultComboBoxModel<>(WineColor.values());
@@ -65,10 +72,10 @@ public class AddWine extends javax.swing.JFrame {
 
         @Override
         protected WineSample doInBackground() throws Exception {
-            // log
+            log.debug("Creating new sample in background");
             WineSample wine = getWineSampleFromForm();
             if (wine == null) {
-                // log error
+                log.error("wrong data enterd to new wine sample");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineSampleDAO.createWineSample(wine);
@@ -80,15 +87,15 @@ public class AddWine extends javax.swing.JFrame {
             try {
                 WineSample wine = get();
                 wineSampleModel.addWineSample(wine);
-                // log info
+                log.debug("Modifing wineSampleModel - adding new wine:" + wine);
                 AddWine.this.dispose();
             } catch (IllegalArgumentException ex) {
                 warningMessageBox(ex.getMessage());
                 return;
             } catch (ExecutionException ex) {
-                // log error
+                log.error("Exception thrown during adding new wine: "+ex.getCause());
             } catch (InterruptedException ex) {
-                // log error
+                log.error("Method doInBackground in AddWineWorker was interrupted:" +ex.getCause());
                 throw new RuntimeException("Operation interrupted in creating new wine sample");
             }
         }
@@ -99,10 +106,10 @@ public class AddWine extends javax.swing.JFrame {
 
         @Override
         protected WineSample doInBackground() throws Exception {
-            // log
+            log.debug("Updating wine sample in background");
             WineSample wine = getWineSampleFromForm();
             if (wine == null) {
-                //log error
+                log.error("Wrong data entered to updated wine sample");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineSampleDAO.updateWineSample(wine);
@@ -114,17 +121,17 @@ public class AddWine extends javax.swing.JFrame {
             try {
                 WineSample wine = get();
                 wineSampleModel.updateWineSample(wine, rowIndex);
-                //log info 
+                log.debug("Modifing wineSampleModel - updating wine: " + wine);
                 context.getjTableWineSamples().getSelectionModel().clearSelection();
                 context.getWineSampleUpdateButton().setEnabled(false);
                 context.getWineSampleDeleteButton().setEnabled(false);
                 AddWine.this.dispose();
             } catch (IllegalArgumentException ex) {
-                // log error
+                log.error("Wrong data to be updated: " + ex.getCause());
             } catch (ExecutionException ex){
-                //log
+                log.error("Exception thrown while updating wine: " + ex.getCause());
             } catch (InterruptedException ex) {
-                // log error
+                log.error("Method doInBackground in UpdateWineWorker was interrupted:" + ex.getCause());
                 throw new RuntimeException("Operation interrupted in updating wine sample");
             }
         }
@@ -168,7 +175,7 @@ public class AddWine extends javax.swing.JFrame {
     }
     
     private void warningMessageBox(String message) {
-        // log
+        log.debug("Showing warning message box with message: " + message);
         JOptionPane.showMessageDialog(rootPane, message, null, JOptionPane.INFORMATION_MESSAGE);
     }
 

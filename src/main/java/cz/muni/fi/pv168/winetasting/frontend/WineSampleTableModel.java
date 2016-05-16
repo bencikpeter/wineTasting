@@ -8,6 +8,9 @@ package cz.muni.fi.pv168.winetasting.frontend;
 import cz.muni.fi.pv168.winetasting.backend.WineCharacter;
 import cz.muni.fi.pv168.winetasting.backend.WineColor;
 import cz.muni.fi.pv168.winetasting.backend.WineSample;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -19,6 +22,8 @@ import javax.swing.table.AbstractTableModel;
 public class WineSampleTableModel extends AbstractTableModel{
     
     //TODO here should be logger
+    //WHY???
+    final static Logger log = LoggerFactory.getLogger(WineSampleTableModel.class);
     
     private List<WineSample> wineSamples = new ArrayList<>();
 

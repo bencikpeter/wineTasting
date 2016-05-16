@@ -10,6 +10,8 @@ import cz.muni.fi.pv168.winetasting.backend.WineSample;
 import cz.muni.fi.pv168.winetasting.backend.WineSampleDAO;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingManager;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +25,10 @@ import javax.swing.SwingWorker;
  * @author lukas
  */
 public class SessionLessWines extends javax.swing.JFrame {
+
+    final static org.slf4j.Logger log = LoggerFactory.getLogger(SessionLessWines.class);
+
+
     private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
     private static WineTastingManager manager = CommonResources.getWineTastingManager();
     private SessionDependentWines context;
@@ -53,12 +59,12 @@ public class SessionLessWines extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                //TODO log debug
+                log.debug("Finding all unsessioned wines");
                 wineSampleModel.setWineSamples(get());
             }catch(ExecutionException ex) {
-         //TODO   log
+                log.error("Exception thrown while attempting to find all unsessioned wines: "+ex.getCause());
             } catch (InterruptedException ex) {
-         //TODO   log
+                log.error("Method doInBackground in FindUnsessionedWinesWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindUnsessionedWinesWorker");
             }
         }
@@ -68,6 +74,7 @@ public class SessionLessWines extends javax.swing.JFrame {
 
         @Override
         protected List<WineSample> doInBackground() throws Exception {
+            log.debug("Assigning wines to session in background");
             int [] selectedRows = jWineTable.getSelectedRows();
             List<WineSample> samples = new ArrayList<>();
             if ( selectedRows.length >= 0 ) {
@@ -88,7 +95,7 @@ public class SessionLessWines extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                // log debug
+                log.debug("Assigning wines to session");
                 List<WineSample> list = get();
                 WinesInSessionTableModel model = context.getWineSampleModel();
                 for (WineSample wine : list) {
@@ -96,10 +103,10 @@ public class SessionLessWines extends javax.swing.JFrame {
                 }
                 SessionLessWines.this.dispose();
             } catch (ExecutionException ex) {
+                log.error("Exception thrown while attempting to assign wines to session: " + ex.getCause());
                 JOptionPane.showMessageDialog(rootPane, "cannot-add-wine-to-session");
-                // log error
             } catch (InterruptedException ex) {
-                //log error
+                log.error("Method doInBackground in AssignWinesToSessionWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted.. AssignWinesToSessionWorker");
             }
         }

@@ -26,12 +26,16 @@ import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import org.apache.derby.jdbc.ClientDataSource;
 import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author lukas
  */
 public class MainWindow extends javax.swing.JFrame {
+
+    final static Logger log = LoggerFactory.getLogger(MainWindow.class);
     
     private static CommonResources resources;
     private static ClientDataSource dataSource = resources.getDataSource();
@@ -101,12 +105,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try{
-         //TODO   log.debug("Changing wineSample model - all wineSamples are loaded from database."
+                log.debug("Changing wineSample model - all wineSamples are loaded from database.");
                 wineSampleModel.setWineSamples(get());
             }catch(ExecutionException ex) {
-         //TODO   log.error("Exception was thrown in FindAllWineSamplesWorker in method doInBackGround " + ex.getCause());
+                log.error("Exception was thrown in FindAllWineSamplesWorker in method doInBackGround " + ex.getCause());
             } catch (InterruptedException ex) {
-         //TODO   log.error("Method doInBackground has been interrupted in FindAllWineSamplesWorker " + ex.getCause());
+                log.error("Method doInBackground has been interrupted in FindAllWineSamplesWorker " + ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindAllWineSamplesWorker");
             }
         }
@@ -129,12 +133,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                // TODO log
+                log.debug("Changing wineSample Model - filtering wine samples by variety");
                 wineSampleModel.setWineSamples(get());
             } catch (ExecutionException ex) {
-                //TODO log
+                log.error("Exception was thrown in FindWineSamplesByVarietyWorker:" + ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log
+                log.error("Method do in backgorund interruped in FindWineSamplesByVarietyWorker" + ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindWineSamplesByVarietyWorker");
             }
         }
@@ -179,15 +183,15 @@ public class MainWindow extends javax.swing.JFrame {
         protected void done() {
             try {
                 int [] indexes = get();
-                // log debug
+                log.debug("Changing wineSample Model - Deleting wine sample");
                 if (indexes != null && indexes.length != 0) {
                     wineSampleModel.deleteWineSamples(indexes);
                 }
             } catch (ExecutionException ex) {
                 JOptionPane.showMessageDialog(rootPane, "cannot-delete-wine-sample");
-                // log error
+                log.error("Exception thrown while deleting wine sample"+ ex.getCause());
             } catch (InterruptedException ex) {
-                //log error
+                log.error("Method do in background in DeleteWineSampleWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted.. DeleteWineSampleWorker");
             }
         }
@@ -203,12 +207,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                // log debug
+                log.debug("Changing wineSample Model - Finding all Sessions");
                 wineSessionModel.setWineSessions(get());
             } catch (ExecutionException ex) {
-                //TODO log error
+                log.error("Exception thrown while listing all sessions"+ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log error
+                log.error("Method doInBackground in FindAllWineSessionsWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindAllWineTastingSessions");
             }
         }
@@ -230,12 +234,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                //TODO log
+                log.debug("Changing wineSample Model - Listing sessions by date");
                 wineSessionModel.setWineSessions(get());
             } catch (ExecutionException ex) {
-                //TODO log
+                log.error("Exception thrown while listing sessions by date"+ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log
+                log.error("Method doInBackground in FindWineSessionsByDate was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindWineTastingSessionsByDate");
             }
         }
@@ -275,15 +279,15 @@ public class MainWindow extends javax.swing.JFrame {
         protected void done() {
             try {
                 int[] indexes = get();
-                //TODO log debug
+                log.debug("Changing wineSample Model - Deleting wineSession");
                 if(indexes != null && indexes.length != 0) {
                     wineSessionModel.deleteWineSessions(indexes);
                 }
             } catch (ExecutionException ex) {
                 JOptionPane.showMessageDialog(rootPane, "cannot-delete-wine-session");
-                //TOTO log error
+                log.error("Exception thrown while deleting session"+ex.getCause());
             } catch (InterruptedException ex) {
-                //log error
+                log.error("Method doInBackground in DeleteWineSessionWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted.. DeleteWineSessionWorker");
             }
         }
@@ -294,7 +298,9 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/createTables.sql"));
         } catch (SQLException ex) {
-            // logging and show JOptionPane.showMessageDialog some error
+            // show JOptionPane.showMessageDialog some error
+            log.error("Error while creating a database from SQL script " + WineTastingManager.class.getResource("/createTables.sql")
+                        + "Exception: " + ex.getCause());
             System.out.println(ex.getMessage());
         }
     }
@@ -303,7 +309,9 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/insertValues.sql"));
         } catch (SQLException ex) {
-             // logging and show JOptionPane.showMessageDialog some error
+             //show JOptionPane.showMessageDialog some error
+            log.error("Error while inserting test data in dabaase from SQL script "+ WineTastingManager.class.getResource("/insertValues.sql")
+                        + "Exception: " + ex.getCause());
              System.out.println(ex.getMessage());
         }
     }
@@ -313,7 +321,8 @@ public class MainWindow extends javax.swing.JFrame {
             // we need to create dropTables.sql file
             DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/dropTables.sql"));
         } catch (SQLException ex) {
-            // logging
+            log.error("Error while dropping database schema "+ WineTastingManager.class.getResource("/dropTables.sql") + "Exception: "
+                        + ex.getCause());
         }
     }
     

@@ -7,6 +7,9 @@ package cz.muni.fi.pv168.winetasting.frontend;
 
 import cz.muni.fi.pv168.winetasting.backend.WineTastingDAO;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +23,9 @@ import javax.swing.SwingWorker;
  * @author lukas
  */
 public class AddSession extends javax.swing.JFrame {
+    
+    final static Logger log = LoggerFactory.getLogger(AddSession.class);
+    
     private static WineTastingDAO wineTastingDAO = CommonResources.getWineTastingDAO();
     private DefaultComboBoxModel wineSessionYearComboBoxModel = new DefaultComboBoxModel<>(years());
     private DefaultComboBoxModel wineSessionMonthComboBoxModel = new DefaultComboBoxModel<>(months());
@@ -62,10 +68,10 @@ public class AddSession extends javax.swing.JFrame {
 
         @Override
         protected WineTastingSession doInBackground() throws Exception {
-            //TODO log
+            log.debug("creating new session in doInBackgroud");
             WineTastingSession session = getWineTastingSessionFromForm();
             if(session == null){
-                //log error
+                log.error("Session to add is null (wrong enter data)");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineTastingDAO.createSession(session);
@@ -77,15 +83,15 @@ public class AddSession extends javax.swing.JFrame {
             try {
                 WineTastingSession session = get();
                 wineSessionModel.addWineSession(session);
-                //log info
+                log.debug("Modifing wineSessionModel - Adding new session: "+session);
                 AddSession.this.dispose();
             } catch (IllegalArgumentException ex) {
                 warningMessageBox(ex.getMessage());
                 return;
             } catch (ExecutionException ex) {
-                //TODO log error
+                log.error("Exception thrown while adding session: " +ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log error
+                log.error("Method doInBackground in AddSessionWorker was interrupted:" +ex.getCause());
                 throw new RuntimeException("Operation interrupted in creating new wine session");
             }
         } 
@@ -95,10 +101,10 @@ public class AddSession extends javax.swing.JFrame {
 
         @Override
         protected WineTastingSession doInBackground() throws Exception {
-            //TODO log
+            log.debug("Updating session in doInBackground");
             WineTastingSession session = getWineTastingSessionFromForm();
             if (session == null){
-                //TODO log error
+                log.error("Session to add is null (wrong enter data)");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineTastingDAO.updateSession(session);
@@ -110,7 +116,7 @@ public class AddSession extends javax.swing.JFrame {
             try {
                 WineTastingSession session = get();
                 wineSessionModel.updateWineSession(session, rowIndex);
-                //TODO log info
+                log.debug("Modifing wineSessionModel - Upadting session: "+session);
                 context.getjTableWineSessions().getSelectionModel().clearSelection();
                 context.getWineSessionUpdateButton().setEnabled(false);
                 context.getWineSessionDeleteButtion().setEnabled(false);
@@ -118,11 +124,11 @@ public class AddSession extends javax.swing.JFrame {
                 context.getLayoutButton().setEnabled(false);
                 AddSession.this.dispose();
             } catch (IllegalArgumentException ex) {
-                //TODO log error
+                log.error("Illegal argument exception thrown while updating session: " + ex.getCause());
             } catch (ExecutionException ex) {
-                //TODO log
+                log.error("Exception thrown while updating session: "+ ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log error
+                log.error("Method doInBackground in UpdateSessionWorker was interrupted:" +ex.getCause());
                 throw new RuntimeException("Operation interrupted in updating wine session");
             } 
         }
@@ -148,7 +154,7 @@ public class AddSession extends javax.swing.JFrame {
     }
     
     private void warningMessageBox(String message) {
-        // log
+        log.debug("Showing warning message box with message: " + message);
         JOptionPane.showMessageDialog(rootPane, message, null, JOptionPane.INFORMATION_MESSAGE);
     }
     
