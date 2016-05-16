@@ -135,7 +135,8 @@ public class SessionLessWines extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jWineTable);
 
-        jButton1.setText("Add selected");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts"); // NOI18N
+        jButton1.setText(bundle.getString("Add Selected")); // NOI18N
         jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

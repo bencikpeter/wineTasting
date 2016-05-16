@@ -197,7 +197,8 @@ public class SessionDependentWines extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTableWineSamples);
 
-        jButton1.setText("Remove selected");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts"); // NOI18N
+        jButton1.setText(bundle.getString("Remove selected")); // NOI18N
         jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +206,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Rate selected wine");
+        jButton2.setText(bundle.getString("Rate selected")); // NOI18N
         jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,7 +214,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Add Wines");
+        jButton3.setText(bundle.getString("Add Wines")); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
