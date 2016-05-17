@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.winetasting.backend;
 
 import cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -15,9 +16,12 @@ import java.util.List;
  */
 public class WineTastingManagerImpl implements WineTastingManager{
 
+    final static org.slf4j.Logger log = LoggerFactory.getLogger(WineTastingManagerImpl.class);
+
     private DataSource dataSource;
 
     public WineTastingManagerImpl() {
+        log.error("Calling unsuported default constructor of {}",WineTastingDAOImpl.class);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -55,6 +59,8 @@ public class WineTastingManagerImpl implements WineTastingManager{
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO WineTasting (sessionId, sampleId)" +
                         "VALUES (?,?)")){
+            log.debug("Assigning wine: {} to session: {}",sample,session);
+
             statement.setLong(1, session.getID());
             statement.setLong(2, sample.getId());
 
@@ -63,6 +69,7 @@ public class WineTastingManagerImpl implements WineTastingManager{
                 throw new ServiceFailureException("assignWineToSession: number of added rows is not one");
             }
         } catch (SQLException ex) {
+            log.error("Error when assigning wine to session",ex,sample,session);
             throw new ServiceFailureException("error assigning wine to session",ex);
         }
 
@@ -84,6 +91,8 @@ public class WineTastingManagerImpl implements WineTastingManager{
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("UPDATE WineTasting SET rating = ?" +
                                                                         "WHERE sessionId = ? AND sampleId = ?")) {
+            log.debug("Assigning rating {} to wine {} is session {}",rating,sample,session);
+
             statement.setInt(1, rating);
             statement.setLong(2, session.getID());
             statement.setLong(3, sample.getId());
@@ -93,6 +102,7 @@ public class WineTastingManagerImpl implements WineTastingManager{
                 throw new ServiceFailureException("number of updated rows is not one");
             }
         } catch (SQLException ex) {
+            log.error("Error when assigning rating to wine",ex,sample,session,rating);
             throw new ServiceFailureException("error assigning rating to wine", ex);
         }
     }
@@ -107,6 +117,7 @@ public class WineTastingManagerImpl implements WineTastingManager{
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT sessionId FROM WineTasting " +
                                                                         "WHERE sampleId = ?")) {
+            log.debug("Finding session with specified wine: {}",sample);
             statement.setLong(1, sample.getId());
             ResultSet resultSet = statement.executeQuery();
             Long sessionId = null;
@@ -116,10 +127,12 @@ public class WineTastingManagerImpl implements WineTastingManager{
                     throw new ServiceFailureException("retrieved more than one row from WineTasting");
                 }
             }
+
             WineTastingDAO manager = new WineTastingDAOImpl(dataSource);
             WineTastingSession session = manager.findSessionById(sessionId);
             return session;
         } catch (SQLException ex) {
+            log.error("Error finding session with specific sample",ex,sample);
             throw new ServiceFailureException("error finding session with specific wine", ex);
         }
     }
@@ -134,6 +147,7 @@ public class WineTastingManagerImpl implements WineTastingManager{
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT  sampleId, rating FROM WineTasting WHERE sessionId = ?")) {
+            log.debug("Finding all wines in session {}",session);
             statement.setLong(1, session.getID());
             ResultSet resultSet = statement.executeQuery();
             List<WineSample> wines = new ArrayList<>();
@@ -147,6 +161,7 @@ public class WineTastingManagerImpl implements WineTastingManager{
             }
             return wines;
         } catch (SQLException ex) {
+            log.error("Error when retrieving all wines in session",ex,session);
             throw new ServiceFailureException("error finding all wines in specific session", ex);
         }
     }
@@ -161,12 +176,14 @@ public class WineTastingManagerImpl implements WineTastingManager{
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROm WineTasting WHERE sessionId = ? AND sampleId = ?")) {
+            log.debug("removing wine {} from session {}",sample,session);
             statement.setLong(1, session.getID());
             statement.setLong(2, sample.getId());
             
             int deletedRows = statement.executeUpdate();
             DBUtils.checkUpdatesCount(deletedRows, session, false);
         } catch (SQLException ex) {
+            log.error("Error removing wine from session",ex,session);
             throw new ServiceFailureException("error removing wine from specific session", ex);
         }
     }

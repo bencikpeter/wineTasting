@@ -2,6 +2,8 @@ package cz.muni.fi.pv168.winetasting.backend;
 
 import cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException;
 import cz.muni.fi.pv168.winetasting.backend.Exceptions.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -13,6 +15,8 @@ import java.util.List;
  * Created by lukas on 3/15/16.
  */
 public class WineSampleDAOImpl implements WineSampleDAO {
+
+    final static Logger log = LoggerFactory.getLogger(WineSampleDAOImpl.class);
 
     private DataSource dataSource;
 
@@ -101,6 +105,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                                 "color," +
                                 "character_," +
                                 "year_) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+            log.debug("Creatring wine sample {}",wineSample);
 
             statement.setString(1, wineSample.getVintnerFirstName());
             statement.setString(2, wineSample.getVintnerLastName());
@@ -114,6 +119,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             Long id = DBUtils.getId(statement.getGeneratedKeys());
             wineSample.setId(id);
         }catch (SQLException ex) {
+            log.error("Error when creating wineSample",ex,wineSample);
             throw new ServiceFailureException("error inserting wineSample into db", ex);
         }
     }
@@ -135,6 +141,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "character_ = ?," +
                             "year_ = ? " +
                             "WHERE id = ?")) {
+            log.debug("Updating wine sample {}",wineSample);
 
             statement.setString(1, wineSample.getVintnerFirstName());
             statement.setString(2, wineSample.getVintnerLastName());
@@ -148,6 +155,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             DBUtils.checkUpdatesCount(updatedRows, wineSample, false);
 
         }catch (SQLException ex) {
+            log.error("Error when updating wineSample",ex,wineSample);
             throw new ServiceFailureException("error updating wineSample", ex);
         }
     }
@@ -163,12 +171,14 @@ public class WineSampleDAOImpl implements WineSampleDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM WineSample WHERE id = ?")) {
+            log.debug("Deleting wine sample {}",wineSample);
             statement.setLong(1, wineSample.getId());
 
             int deletedRows = statement.executeUpdate();
             DBUtils.checkUpdatesCount(deletedRows, wineSample, false);
 
         } catch (SQLException ex) {
+            log.error("Error when deleting wine sample",ex,wineSample);
             throw new ServiceFailureException("error deleting wineSample", ex);
         }
     }
@@ -189,6 +199,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "color," +
                             "character_," +
                             "year_ FROM WineSample WHERE id = ?")) {
+            log.debug("Finding wine sample by ID {}",id);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -203,6 +214,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                 return null;
             }
         } catch (SQLException ex) {
+            log.error("Error when find wine sample by id",ex,id);
             throw new ServiceFailureException("error retrieving WineSample with id " + id, ex);
         }
     }
@@ -220,6 +232,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "color," +
                             "character_," +
                             "year_ FROM WineSample")) {
+            log.debug("Finding all wine samples");
             ResultSet resultSet = statement.executeQuery();
 
             List<WineSample> wineSamples = new ArrayList<>();
@@ -228,6 +241,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             }
             return wineSamples;
         } catch (SQLException ex) {
+            log.error("Error when finding all wine samples",ex);
             throw new ServiceFailureException("error retrieving all wineSamples from db", ex);
         }
     }
@@ -245,6 +259,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "color," +
                             "character_," +
                             "year_ FROM WineSample WHERE variety = ?")) {
+            log.debug("Finding wine samples by variety {}",variety);
             statement.setString(1, variety);
             ResultSet resultSet = statement.executeQuery();
 
@@ -254,6 +269,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             }
             return wineSamples;
         } catch (SQLException ex) {
+            log.error("Error when finding wine samples by variety",ex,variety);
             throw new ServiceFailureException("Error retrieving wineSamples by variety " + variety, ex);
         }
     }
@@ -272,6 +288,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
                             "character_," +
                             "year_ FROM WineSample INNER JOIN WineTasting " +
                             "ON WineSample.id = WineTasting.sampleID")) {
+            log.debug("Finding all unsessioned wines");
             List<WineSample> allWineSamples = findAllWineSamples();
             ResultSet resultSet = statement.executeQuery();
 
@@ -283,6 +300,7 @@ public class WineSampleDAOImpl implements WineSampleDAO {
             allWineSamples.removeAll(sessionedWineSamples);
             return allWineSamples;
         } catch (SQLException ex) {
+            log.error("Error when finding all usessioned wines",ex);
             throw new ServiceFailureException("Error retrieving unsessioned wine samples", ex);
         }
     }

@@ -2,6 +2,8 @@ package cz.muni.fi.pv168.winetasting.backend;
 
 import cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException;
 import cz.muni.fi.pv168.winetasting.backend.Exceptions.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -13,6 +15,9 @@ import java.util.List;
  * Created by bencikpeter on 16.03.16.
  */
 public class WineTastingDAOImpl implements WineTastingDAO {
+
+    final static Logger log = LoggerFactory.getLogger(WineTastingDAOImpl.class);
+
 
     private DataSource dataSource;
 
@@ -43,6 +48,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("INSERT INTO WineTastingSession (place, date)" +
                     "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)){
+            log.debug("Creating session {}",session);
             statement.setString(1, session.getPlace());
             statement.setDate(2, toSqlDate(session.getDate()));
             int addedRows = statement.executeUpdate();
@@ -56,6 +62,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             //no need to commit - connections by default are in auto commit mode
 
         } catch (SQLException ex){
+            log.error("Error when creating session",ex,session);
             throw new ServiceFailureException("error when inserting session int db", ex);
         }
     }
@@ -71,6 +78,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("UPDATE WineTastingSession SET place = ?, date = ? " +
                     "WHERE ID = ?")){
+            log.debug("Updating session: {}",session);
             statement.setString(1,session.getPlace());
             statement.setDate(2,toSqlDate(session.getDate()));
             statement.setLong(3,session.getID());
@@ -83,6 +91,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             }
 
         } catch (SQLException ex){
+            log.error("Error when updating session",ex,session);
             throw new ServiceFailureException("error updating session", ex);
         }
 
@@ -99,7 +108,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("DELETE FROM WineTastingSession WHERE ID = ?")){
-
+            log.debug("Deleting session {}",session);
             statement.setLong(1,session.getID());
 
             int deletedRows = statement.executeUpdate();
@@ -111,6 +120,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             }
 
         } catch (SQLException ex){
+            log.error("Error when deleting session",ex,session);
             throw new ServiceFailureException("error deleting session", ex);
         }
 
@@ -127,6 +137,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT id, place, date FROM WineTastingSession WHERE id = ?")) {
+            log.debug("finding session by id {}",id);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             WineTastingSession session = null;
@@ -139,6 +150,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             }
             return session;
         } catch (SQLException ex) {
+            log.error("Error when finding session by id",ex,id);
             throw new ServiceFailureException("error finding session by id", ex);
         }
     }
@@ -156,6 +168,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         "SELECT id, place, date FROM WineTastingSession WHERE date = ?")){
+            log.debug("Finding sessions by date");
             statement.setDate(1, toSqlDate(date));
             ResultSet rs = statement.executeQuery();
             List<WineTastingSession> result = new ArrayList<>();
@@ -167,6 +180,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             return result;
 
         } catch (SQLException ex) {
+            log.error("Error when finding session by date",ex,date);
             throw new ServiceFailureException("error retrieving sessions by date", ex);
         }
     }
@@ -177,6 +191,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         "SELECT id, place, date FROM WineTastingSession")) {
+            log.debug("Finding all sessions");
 
             ResultSet rs = statement.executeQuery();
             List<WineTastingSession> result = new ArrayList<>();
@@ -188,6 +203,7 @@ public class WineTastingDAOImpl implements WineTastingDAO {
             return result;
 
         } catch (SQLException ex) {
+            log.error("Error when finding all sessions");
             throw new ServiceFailureException("error retrieving all sessions", ex);
         }
     }

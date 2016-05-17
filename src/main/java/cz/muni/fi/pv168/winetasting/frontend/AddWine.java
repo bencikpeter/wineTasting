@@ -9,6 +9,9 @@ import cz.muni.fi.pv168.winetasting.backend.WineCharacter;
 import cz.muni.fi.pv168.winetasting.backend.WineColor;
 import cz.muni.fi.pv168.winetasting.backend.WineSample;
 import cz.muni.fi.pv168.winetasting.backend.WineSampleDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -21,6 +24,10 @@ import javax.swing.SwingWorker;
  * @author lukas
  */
 public class AddWine extends javax.swing.JFrame {
+
+    final static Logger log = LoggerFactory.getLogger(AddWine.class);
+
+
     private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
     private DefaultComboBoxModel wineSampleCharacterComboBoxModel = new DefaultComboBoxModel<>(WineCharacter.values());
     private DefaultComboBoxModel wineSampleColorComboBoxModel = new DefaultComboBoxModel<>(WineColor.values());
@@ -65,10 +72,10 @@ public class AddWine extends javax.swing.JFrame {
 
         @Override
         protected WineSample doInBackground() throws Exception {
-            // log
+            log.debug("Creating new sample in background");
             WineSample wine = getWineSampleFromForm();
             if (wine == null) {
-                // log error
+                log.error("wrong data enterd to new wine sample");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineSampleDAO.createWineSample(wine);
@@ -80,15 +87,15 @@ public class AddWine extends javax.swing.JFrame {
             try {
                 WineSample wine = get();
                 wineSampleModel.addWineSample(wine);
-                // log info
+                log.debug("Modifing wineSampleModel - adding new wine:" + wine);
                 AddWine.this.dispose();
             } catch (IllegalArgumentException ex) {
                 warningMessageBox(ex.getMessage());
                 return;
             } catch (ExecutionException ex) {
-                // log error
+                log.error("Exception thrown during adding new wine: "+ex.getCause());
             } catch (InterruptedException ex) {
-                // log error
+                log.error("Method doInBackground in AddWineWorker was interrupted:" +ex.getCause());
                 throw new RuntimeException("Operation interrupted in creating new wine sample");
             }
         }
@@ -99,10 +106,10 @@ public class AddWine extends javax.swing.JFrame {
 
         @Override
         protected WineSample doInBackground() throws Exception {
-            // log
+            log.debug("Updating wine sample in background");
             WineSample wine = getWineSampleFromForm();
             if (wine == null) {
-                //log error
+                log.error("Wrong data entered to updated wine sample");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineSampleDAO.updateWineSample(wine);
@@ -114,17 +121,17 @@ public class AddWine extends javax.swing.JFrame {
             try {
                 WineSample wine = get();
                 wineSampleModel.updateWineSample(wine, rowIndex);
-                //log info 
+                log.debug("Modifing wineSampleModel - updating wine: " + wine);
                 context.getjTableWineSamples().getSelectionModel().clearSelection();
                 context.getWineSampleUpdateButton().setEnabled(false);
                 context.getWineSampleDeleteButton().setEnabled(false);
                 AddWine.this.dispose();
             } catch (IllegalArgumentException ex) {
-                // log error
+                log.error("Wrong data to be updated: " + ex.getCause());
             } catch (ExecutionException ex){
-                //log
+                log.error("Exception thrown while updating wine: " + ex.getCause());
             } catch (InterruptedException ex) {
-                // log error
+                log.error("Method doInBackground in UpdateWineWorker was interrupted:" + ex.getCause());
                 throw new RuntimeException("Operation interrupted in updating wine sample");
             }
         }
@@ -168,7 +175,7 @@ public class AddWine extends javax.swing.JFrame {
     }
     
     private void warningMessageBox(String message) {
-        // log
+        log.debug("Showing warning message box with message: " + message);
         JOptionPane.showMessageDialog(rootPane, message, null, JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -198,37 +205,39 @@ public class AddWine extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox3 = new javax.swing.JComboBox<String>();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setText("Meno");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts"); // NOI18N
+        jLabel1.setText(bundle.getString("Name")); // NOI18N
 
-        jLabel2.setText("Priezvisko");
+        jLabel2.setText(bundle.getString("Surname")); // NOI18N
 
-        jLabel3.setText("Odroda");
+        jLabel3.setText(bundle.getString("Variety")); // NOI18N
 
-        jLabel4.setText("Farba");
+        jLabel4.setText(bundle.getString("Color")); // NOI18N
 
-        jLabel5.setText("Prívlastok");
+        jLabel5.setText(bundle.getString("Charakter")); // NOI18N
 
-        jLabel6.setText("Rok");
+        jLabel6.setText(bundle.getString("Year")); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("Add");
+        jButton1.setText(bundle.getString("Add")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

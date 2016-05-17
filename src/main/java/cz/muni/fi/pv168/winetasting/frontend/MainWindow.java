@@ -26,12 +26,16 @@ import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import org.apache.derby.jdbc.ClientDataSource;
 import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author lukas
  */
 public class MainWindow extends javax.swing.JFrame {
+
+    final static Logger log = LoggerFactory.getLogger(MainWindow.class);
     
     private static CommonResources resources;
     private static ClientDataSource dataSource = resources.getDataSource();
@@ -101,12 +105,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try{
-         //TODO   log.debug("Changing wineSample model - all wineSamples are loaded from database."
+                log.debug("Changing wineSample model - all wineSamples are loaded from database.");
                 wineSampleModel.setWineSamples(get());
             }catch(ExecutionException ex) {
-         //TODO   log.error("Exception was thrown in FindAllWineSamplesWorker in method doInBackGround " + ex.getCause());
+                log.error("Exception was thrown in FindAllWineSamplesWorker in method doInBackGround " + ex.getCause());
             } catch (InterruptedException ex) {
-         //TODO   log.error("Method doInBackground has been interrupted in FindAllWineSamplesWorker " + ex.getCause());
+                log.error("Method doInBackground has been interrupted in FindAllWineSamplesWorker " + ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindAllWineSamplesWorker");
             }
         }
@@ -129,12 +133,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                // TODO log
+                log.debug("Changing wineSample Model - filtering wine samples by variety");
                 wineSampleModel.setWineSamples(get());
             } catch (ExecutionException ex) {
-                //TODO log
+                log.error("Exception was thrown in FindWineSamplesByVarietyWorker:" + ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log
+                log.error("Method do in backgorund interruped in FindWineSamplesByVarietyWorker" + ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindWineSamplesByVarietyWorker");
             }
         }
@@ -179,15 +183,15 @@ public class MainWindow extends javax.swing.JFrame {
         protected void done() {
             try {
                 int [] indexes = get();
-                // log debug
+                log.debug("Changing wineSample Model - Deleting wine sample");
                 if (indexes != null && indexes.length != 0) {
                     wineSampleModel.deleteWineSamples(indexes);
                 }
             } catch (ExecutionException ex) {
                 JOptionPane.showMessageDialog(rootPane, "cannot-delete-wine-sample");
-                // log error
+                log.error("Exception thrown while deleting wine sample"+ ex.getCause());
             } catch (InterruptedException ex) {
-                //log error
+                log.error("Method do in background in DeleteWineSampleWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted.. DeleteWineSampleWorker");
             }
         }
@@ -203,12 +207,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                // log debug
+                log.debug("Changing wineSample Model - Finding all Sessions");
                 wineSessionModel.setWineSessions(get());
             } catch (ExecutionException ex) {
-                //TODO log error
+                log.error("Exception thrown while listing all sessions"+ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log error
+                log.error("Method doInBackground in FindAllWineSessionsWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindAllWineTastingSessions");
             }
         }
@@ -230,12 +234,12 @@ public class MainWindow extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                //TODO log
+                log.debug("Changing wineSample Model - Listing sessions by date");
                 wineSessionModel.setWineSessions(get());
             } catch (ExecutionException ex) {
-                //TODO log
+                log.error("Exception thrown while listing sessions by date"+ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log
+                log.error("Method doInBackground in FindWineSessionsByDate was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindWineTastingSessionsByDate");
             }
         }
@@ -275,15 +279,15 @@ public class MainWindow extends javax.swing.JFrame {
         protected void done() {
             try {
                 int[] indexes = get();
-                //TODO log debug
+                log.debug("Changing wineSample Model - Deleting wineSession");
                 if(indexes != null && indexes.length != 0) {
                     wineSessionModel.deleteWineSessions(indexes);
                 }
             } catch (ExecutionException ex) {
                 JOptionPane.showMessageDialog(rootPane, "cannot-delete-wine-session");
-                //TOTO log error
+                log.error("Exception thrown while deleting session"+ex.getCause());
             } catch (InterruptedException ex) {
-                //log error
+                log.error("Method doInBackground in DeleteWineSessionWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted.. DeleteWineSessionWorker");
             }
         }
@@ -294,7 +298,9 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/createTables.sql"));
         } catch (SQLException ex) {
-            // logging and show JOptionPane.showMessageDialog some error
+            // show JOptionPane.showMessageDialog some error
+            log.error("Error while creating a database from SQL script " + WineTastingManager.class.getResource("/createTables.sql")
+                        + "Exception: " + ex.getCause());
             System.out.println(ex.getMessage());
         }
     }
@@ -303,7 +309,9 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/insertValues.sql"));
         } catch (SQLException ex) {
-             // logging and show JOptionPane.showMessageDialog some error
+             //show JOptionPane.showMessageDialog some error
+            log.error("Error while inserting test data in dabaase from SQL script "+ WineTastingManager.class.getResource("/insertValues.sql")
+                        + "Exception: " + ex.getCause());
              System.out.println(ex.getMessage());
         }
     }
@@ -313,7 +321,8 @@ public class MainWindow extends javax.swing.JFrame {
             // we need to create dropTables.sql file
             DBUtils.executeSqlScript(dataSource, WineTastingManager.class.getResource("/dropTables.sql"));
         } catch (SQLException ex) {
-            // logging
+            log.error("Error while dropping database schema "+ WineTastingManager.class.getResource("/dropTables.sql") + "Exception: "
+                        + ex.getCause());
         }
     }
     
@@ -429,9 +438,9 @@ public class MainWindow extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox3 = new javax.swing.JComboBox<String>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -439,31 +448,35 @@ public class MainWindow extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(900, 400));
 
-        jButton1.setText("List All");
+        jTabbedPane2.setMinimumSize(new java.awt.Dimension(700, 67));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts"); // NOI18N
+        jButton1.setText(bundle.getString("List All")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Add Wine");
+        jButton4.setText(bundle.getString("Add Wine")); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton10.setText("Search by variety");
+        jButton10.setText(bundle.getString("Search by variety")); // NOI18N
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
             }
         });
 
-        jButton11.setText("Search by last name");
+        jButton11.setText(bundle.getString("Search by last name")); // NOI18N
 
-        jButton12.setText("Update selected");
+        jButton12.setText(bundle.getString("Update Selected")); // NOI18N
         jButton12.setEnabled(false);
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,7 +484,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton13.setText("Delete selected");
+        jButton13.setText(bundle.getString("Delete selected")); // NOI18N
         jButton13.setEnabled(false);
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -493,29 +506,34 @@ public class MainWindow extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(96, 96, 96)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                    .addComponent(jTextField2))
-                .addGap(18, 18, 18)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
-            .addComponent(jScrollPane3)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(96, 96, 96)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(jTextField2))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -527,7 +545,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 24, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Wines", jPanel4);
@@ -540,28 +558,28 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTableWineSessions);
 
-        jButton2.setText("List All");
+        jButton2.setText(bundle.getString("List All")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Add Session");
+        jButton5.setText(bundle.getString("Add Session")); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Search by date");
+        jButton6.setText(bundle.getString("Search by date")); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
 
-        jButton8.setText("Delete selected");
+        jButton8.setText(bundle.getString("Delete selected")); // NOI18N
         jButton8.setEnabled(false);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -569,7 +587,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton9.setText("Update selected");
+        jButton9.setText(bundle.getString("Update Selected")); // NOI18N
         jButton9.setEnabled(false);
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -577,29 +595,34 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
             }
         });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel1.setText("Year");
+        jLabel1.setText(bundle.getString("Year")); // NOI18N
 
-        jLabel2.setText("Month");
+        jLabel2.setText(bundle.getString("Month")); // NOI18N
 
-        jLabel3.setText("Day");
+        jLabel3.setText(bundle.getString("Day")); // NOI18N
 
-        jButton15.setText("Wines in selected");
+        jButton15.setText(bundle.getString("Wines in selected")); // NOI18N
         jButton15.setEnabled(false);
         jButton15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -607,18 +630,18 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setText("Layout");
+        jButton7.setText(bundle.getString("Layout")); // NOI18N
         jButton7.setEnabled(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(32, 32, 32)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -636,7 +659,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -647,8 +670,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -671,7 +693,7 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
-                        .addGap(0, 62, Short.MAX_VALUE))))
+                        .addGap(0, 66, Short.MAX_VALUE))))
         );
 
         jTabbedPane2.addTab("Sessions", jPanel5);
@@ -684,7 +706,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -815,6 +837,10 @@ public class MainWindow extends javax.swing.JFrame {
         }
         jButton8.setEnabled(true);
     }//GEN-LAST:event_jTableWineSessionsMouseReleased
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

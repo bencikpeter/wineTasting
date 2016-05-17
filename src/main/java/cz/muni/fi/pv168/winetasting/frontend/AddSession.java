@@ -7,6 +7,9 @@ package cz.muni.fi.pv168.winetasting.frontend;
 
 import cz.muni.fi.pv168.winetasting.backend.WineTastingDAO;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +23,9 @@ import javax.swing.SwingWorker;
  * @author lukas
  */
 public class AddSession extends javax.swing.JFrame {
+    
+    final static Logger log = LoggerFactory.getLogger(AddSession.class);
+    
     private static WineTastingDAO wineTastingDAO = CommonResources.getWineTastingDAO();
     private DefaultComboBoxModel wineSessionYearComboBoxModel = new DefaultComboBoxModel<>(years());
     private DefaultComboBoxModel wineSessionMonthComboBoxModel = new DefaultComboBoxModel<>(months());
@@ -62,10 +68,10 @@ public class AddSession extends javax.swing.JFrame {
 
         @Override
         protected WineTastingSession doInBackground() throws Exception {
-            //TODO log
+            log.debug("creating new session in doInBackgroud");
             WineTastingSession session = getWineTastingSessionFromForm();
             if(session == null){
-                //log error
+                log.error("Session to add is null (wrong enter data)");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineTastingDAO.createSession(session);
@@ -77,15 +83,15 @@ public class AddSession extends javax.swing.JFrame {
             try {
                 WineTastingSession session = get();
                 wineSessionModel.addWineSession(session);
-                //log info
+                log.debug("Modifing wineSessionModel - Adding new session: "+session);
                 AddSession.this.dispose();
             } catch (IllegalArgumentException ex) {
                 warningMessageBox(ex.getMessage());
                 return;
             } catch (ExecutionException ex) {
-                //TODO log error
+                log.error("Exception thrown while adding session: " +ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log error
+                log.error("Method doInBackground in AddSessionWorker was interrupted:" +ex.getCause());
                 throw new RuntimeException("Operation interrupted in creating new wine session");
             }
         } 
@@ -95,10 +101,10 @@ public class AddSession extends javax.swing.JFrame {
 
         @Override
         protected WineTastingSession doInBackground() throws Exception {
-            //TODO log
+            log.debug("Updating session in doInBackground");
             WineTastingSession session = getWineTastingSessionFromForm();
             if (session == null){
-                //TODO log error
+                log.error("Session to add is null (wrong enter data)");
                 throw new IllegalArgumentException("wrong-enter-data");
             }
             wineTastingDAO.updateSession(session);
@@ -110,7 +116,7 @@ public class AddSession extends javax.swing.JFrame {
             try {
                 WineTastingSession session = get();
                 wineSessionModel.updateWineSession(session, rowIndex);
-                //TODO log info
+                log.debug("Modifing wineSessionModel - Upadting session: "+session);
                 context.getjTableWineSessions().getSelectionModel().clearSelection();
                 context.getWineSessionUpdateButton().setEnabled(false);
                 context.getWineSessionDeleteButtion().setEnabled(false);
@@ -118,11 +124,11 @@ public class AddSession extends javax.swing.JFrame {
                 context.getLayoutButton().setEnabled(false);
                 AddSession.this.dispose();
             } catch (IllegalArgumentException ex) {
-                //TODO log error
+                log.error("Illegal argument exception thrown while updating session: " + ex.getCause());
             } catch (ExecutionException ex) {
-                //TODO log
+                log.error("Exception thrown while updating session: "+ ex.getCause());
             } catch (InterruptedException ex) {
-                //TODO log error
+                log.error("Method doInBackground in UpdateSessionWorker was interrupted:" +ex.getCause());
                 throw new RuntimeException("Operation interrupted in updating wine session");
             } 
         }
@@ -148,7 +154,7 @@ public class AddSession extends javax.swing.JFrame {
     }
     
     private void warningMessageBox(String message) {
-        // log
+        log.debug("Showing warning message box with message: " + message);
         JOptionPane.showMessageDialog(rootPane, message, null, JOptionPane.INFORMATION_MESSAGE);
     }
     
@@ -217,43 +223,45 @@ public class AddSession extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox3 = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setText("Place");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts"); // NOI18N
+        jLabel1.setText(bundle.getString("Place")); // NOI18N
 
-        jLabel2.setText("Date");
+        jLabel2.setText(bundle.getString("Date")); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel3.setText("Year");
+        jLabel3.setText(bundle.getString("Year")); // NOI18N
 
-        jLabel4.setText("Month");
+        jLabel4.setText(bundle.getString("Month")); // NOI18N
 
-        jLabel5.setText("Day");
+        jLabel5.setText(bundle.getString("Day")); // NOI18N
 
-        jButton1.setText("Add");
+        jButton1.setText(bundle.getString("Add")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -285,7 +293,7 @@ public class AddSession extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
-                                        .addGap(0, 82, Short.MAX_VALUE))
+                                        .addGap(0, 69, Short.MAX_VALUE))
                                     .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

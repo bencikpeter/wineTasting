@@ -6,6 +6,9 @@
 package cz.muni.fi.pv168.winetasting.frontend;
 
 import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,10 @@ import javax.swing.table.AbstractTableModel;
 public class WineSessionTableModel extends AbstractTableModel {
     
     //TODO here should be logger
+    //WHY??
+    final static Logger log = LoggerFactory.getLogger(WineSessionTableModel.class);
+    
+    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts");
     
     private List<WineTastingSession> wineSessions = new ArrayList<>();
     
@@ -89,9 +96,11 @@ public class WineSessionTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "place";
+                //return "place";
+                return bundle.getString("Place");
             case 1:
-                return "date";
+                //return "date";
+                return bundle.getString("Date");
             default:
                 throw new IllegalArgumentException("columnIndex");
         }

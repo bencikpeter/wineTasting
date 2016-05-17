@@ -10,6 +10,9 @@ import cz.muni.fi.pv168.winetasting.backend.WineSample;
 import cz.muni.fi.pv168.winetasting.backend.WineSampleDAO;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingManager;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -21,6 +24,9 @@ import javax.swing.SwingWorker;
  * @author lukas
  */
 public class SessionDependentWines extends javax.swing.JFrame {
+
+    final static Logger log = LoggerFactory.getLogger(SessionDependentWines.class);
+
     private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
     private static WineTastingManager wineTastingManager = CommonResources.getWineTastingManager();
     private MainWindow context;
@@ -50,12 +56,12 @@ public class SessionDependentWines extends javax.swing.JFrame {
         @Override
         protected void done() {
             try {
-                //TODO log
+                log.debug("Finding winesamples in session:" + session);
                 wineSampleModel.setWineSamples(get());
             } catch (ExecutionException ex) {
-                //TODO log
+                log.error("Exception thrown while finding wines in session: " + session);
             } catch (InterruptedException ex) {
-                //TODO log
+                log.error("Method doInBackground in FindWineSamplesBySessionWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted in FindWineSamplesBySession");
             }
         }   
@@ -65,7 +71,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
 
         @Override
         protected WineSample doInBackground() throws Exception {
-            //TODO log
+            log.debug("Assigning rating to wine in background");
             rowIndex = jTableWineSamples.getSelectedRow();
             WineSample wineSample = wineSampleModel.getWineSample(rowIndex);
             wineSample.setRating(jSlider1.getValue());
@@ -78,17 +84,17 @@ public class SessionDependentWines extends javax.swing.JFrame {
             try {
                 WineSample wine = get();
                 wineSampleModel.updateWineSample(wine, rowIndex);
-                //TODO log info
+                log.debug("Assigning rating to wine");
                 jTableWineSamples.getSelectionModel().clearSelection();
                 jSlider1.setEnabled(false);
                 jButton2.setEnabled(false);
                 jButton1.setEnabled(false);
             } catch (IllegalArgumentException ex) {
-                // log error
+                log.error("Wrong arguments assinged: " + ex.getCause());
             } catch (ExecutionException ex){
-                //log
+                log.error("Exception thrown while assigning rating to wine: "+ex.getCause());
             } catch (InterruptedException ex) {
-                // log error
+                log.error("Method doInBackground in AssignRatingToWineWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted in AssignRatingToWineWorker");
             }
         }
@@ -99,6 +105,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
 
         @Override
         protected int[] doInBackground() throws Exception {
+            log.debug("Removing wines from session in background");
             int[] selectedRows = jTableWineSamples.getSelectedRows();
             List<Integer> toDeleteRows = new ArrayList<>();
             if (selectedRows.length >= 0) {
@@ -108,6 +115,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
                         wineTastingManager.removeWineFromSession(wineSession, wineSample);
                         toDeleteRows.add(selectedRow);
                     } catch (Exception ex) {
+                        log.error("Error removing wine from session in background: " + ex.getCause());
                         throw new ServiceFailureException("error removing wine from session");
                     }
                 }
@@ -128,15 +136,15 @@ public class SessionDependentWines extends javax.swing.JFrame {
         protected void done() {
             try {
                 int[] indexes = get();
-                //log debug
+                log.debug("Removing wines from session");
                 if (indexes != null && indexes.length != 0) {
                     wineSampleModel.deleteWineSamples(indexes);
                 }
             } catch (ExecutionException ex) {
+                log.error("Exception thrown while attempting to remove wines from session: "+ex.getCause());
                 JOptionPane.showMessageDialog(rootPane, "cannot-remove-wine-sample-from-session");
-                // log error
             } catch (InterruptedException ex) {
-                //log error
+                log.error("Method doInBackground in RemoveWinesFromSessionWorker was interrupted"+ex.getCause());
                 throw new RuntimeException("Operation interrupted.. RemoveWinesFromSessionWorker");
             }
         } 
@@ -180,6 +188,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
         jSlider1 = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1000, 400));
 
         jTableWineSamples.setModel(new WinesInSessionTableModel());
         jTableWineSamples.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -189,7 +198,8 @@ public class SessionDependentWines extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTableWineSamples);
 
-        jButton1.setText("Remove selected");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts"); // NOI18N
+        jButton1.setText(bundle.getString("Remove selected")); // NOI18N
         jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +207,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Rate selected wine");
+        jButton2.setText(bundle.getString("Rate selected")); // NOI18N
         jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +215,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Add Wines");
+        jButton3.setText(bundle.getString("Add Wines")); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -237,7 +247,7 @@ public class SessionDependentWines extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
