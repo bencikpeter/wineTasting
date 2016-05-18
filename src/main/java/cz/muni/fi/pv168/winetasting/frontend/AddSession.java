@@ -26,6 +26,8 @@ public class AddSession extends javax.swing.JFrame {
     
     final static Logger log = LoggerFactory.getLogger(AddSession.class);
     
+    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts");
+    
     private static WineTastingDAO wineTastingDAO = CommonResources.getWineTastingDAO();
     private DefaultComboBoxModel wineSessionYearComboBoxModel = new DefaultComboBoxModel<>(years());
     private DefaultComboBoxModel wineSessionMonthComboBoxModel = new DefaultComboBoxModel<>(months());
@@ -52,7 +54,7 @@ public class AddSession extends javax.swing.JFrame {
         this.rowIndex = rowIndex;
         this.action = action;
         this.wineSessionModel = context.getWineSessionModel();
-        jButton1.setText(action);
+        jButton1.setText(bundle.getString(action));
         
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
@@ -121,7 +123,7 @@ public class AddSession extends javax.swing.JFrame {
                 context.getWineSessionUpdateButton().setEnabled(false);
                 context.getWineSessionDeleteButtion().setEnabled(false);
                 context.getShowWinesInSessionButton().setEnabled(false);
-                context.getLayoutButton().setEnabled(false);
+//                context.getLayoutButton().setEnabled(false);
                 AddSession.this.dispose();
             } catch (IllegalArgumentException ex) {
                 log.error("Illegal argument exception thrown while updating session: " + ex.getCause());

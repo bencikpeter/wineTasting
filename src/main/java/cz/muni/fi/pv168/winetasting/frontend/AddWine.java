@@ -27,7 +27,8 @@ public class AddWine extends javax.swing.JFrame {
 
     final static Logger log = LoggerFactory.getLogger(AddWine.class);
 
-
+    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts");
+    
     private static WineSampleDAO wineSampleDAO = CommonResources.getWineSampleDAO();
     private DefaultComboBoxModel wineSampleCharacterComboBoxModel = new DefaultComboBoxModel<>(WineCharacter.values());
     private DefaultComboBoxModel wineSampleColorComboBoxModel = new DefaultComboBoxModel<>(WineColor.values());
@@ -53,7 +54,7 @@ public class AddWine extends javax.swing.JFrame {
         this.rowIndex = rowIndex;
         this.action = action;
         this.wineSampleModel = context.getWineSampleModel();
-        jButton1.setText(action);
+        jButton1.setText(bundle.getString(action));
         
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         

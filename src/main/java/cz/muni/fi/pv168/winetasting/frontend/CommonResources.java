@@ -12,8 +12,10 @@ import cz.muni.fi.pv168.winetasting.backend.WineTastingDAO;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingDAOImpl;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingManager;
 import cz.muni.fi.pv168.winetasting.backend.WineTastingManagerImpl;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Properties;
 import org.apache.derby.jdbc.ClientDataSource;
 
 /**
@@ -55,15 +57,27 @@ public class CommonResources {
         return result;
     }
     
-    public static void init(){
-        dataSource.setServerName("localhost");
+    public static void init() throws IOException{
+        Properties myconf = new Properties();
+        myconf.load(WineTastingManager.class.getResourceAsStream("/conf.properties"));
+       /* dataSource.setServerName("localhost");
         dataSource.setPortNumber(1527);
-        dataSource.setDatabaseName("winesDB");
+        dataSource.setDatabaseName("winesDB"); */
+        
+        dataSource.setServerName(myconf.getProperty("jdbc.server"));
+        dataSource.setPortNumber(Integer.parseInt(myconf.getProperty("jdbc.port")));
+        dataSource.setDatabaseName(myconf.getProperty("jdbc.name"));
     }
     
-    public CommonResources() {
-        dataSource.setServerName("localhost");
+    public CommonResources() throws IOException {
+        Properties myconf = new Properties();
+        myconf.load(WineTastingManager.class.getResourceAsStream("/conf.properties"));
+       /* dataSource.setServerName("localhost");
         dataSource.setPortNumber(1527);
-        dataSource.setDatabaseName("winesDB");
+        dataSource.setDatabaseName("winesDB"); */
+        
+        dataSource.setServerName(myconf.getProperty("jdbc.server"));
+        dataSource.setPortNumber(Integer.parseInt(myconf.getProperty("jdbc.port")));
+        dataSource.setDatabaseName(myconf.getProperty("jdbc.name"));
     }  
 }
