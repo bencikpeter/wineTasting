@@ -1,0 +1,269 @@
+2016-05-17 16:50:26 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 16:50:26 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 16:52:27 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 16:52:27 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=1} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all unsessioned wines
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Deleting wine sample WineSample{id=1}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Updating wine sample WineSample{id=1}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine samples by variety Rizling
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding sessions by date
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Updating session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@78d6473d
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 16:55:02 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 16:55:14 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 16:55:14 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 16:55:14 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 16:55:14 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=1} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all unsessioned wines
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:41 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Deleting wine sample WineSample{id=1}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Updating wine sample WineSample{id=1}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine samples by variety Rizling
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding sessions by date
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Updating session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@78d6473d
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 17:05:42 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:06:09 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:06:09 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:06:09 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 17:06:09 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:08:16 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:16 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:16 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:16 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:16 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=1} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all unsessioned wines
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Deleting wine sample WineSample{id=1}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Updating wine sample WineSample{id=1}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine samples by variety Rizling
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding sessions by date
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Updating session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@78d6473d
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 17:08:17 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:08:35 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:08:35 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:08:35 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:08:35 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 17:10:13 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:10:13 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:10:13 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:10:13 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 17:12:04 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:12:04 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:04 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:12:04 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=1} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all unsessioned wines
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Deleting wine sample WineSample{id=1}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Updating wine sample WineSample{id=1}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine samples by variety Rizling
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding sessions by date
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Updating session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@78d6473d
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-17 17:12:27 [main] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:12:40 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:12:40 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:12:40 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:12:40 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 17:12:47 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-17 17:12:47 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-17 17:12:50 [SwingWorker-pool-1-thread-4] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-17 17:12:50 [SwingWorker-pool-1-thread-4] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-05-17 17:12:50 [SwingWorker-pool-1-thread-4] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 2
+2016-05-17 17:12:50 [SwingWorker-pool-1-thread-4] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 3
+2016-05-17 17:12:50 [SwingWorker-pool-1-thread-4] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 4
+2016-05-17 17:12:50 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-17 17:12:57 [SwingWorker-pool-1-thread-5] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-05-17 17:12:57 [SwingWorker-pool-1-thread-5] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 7
+2016-05-17 17:12:57 [SwingWorker-pool-1-thread-5] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 8
+2016-05-17 17:12:57 [SwingWorker-pool-1-thread-5] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 9
+2016-05-17 17:12:58 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-05-17 17:13:04 [SwingWorker-pool-1-thread-6] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-17 17:13:04 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-17 17:13:08 [SwingWorker-pool-1-thread-7] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-17 17:13:08 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-17 17:13:10 [SwingWorker-pool-1-thread-8] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all unsessioned wines
+2016-05-17 17:13:10 [SwingWorker-pool-1-thread-8] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:13:10 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.SessionLessWines - Finding all unsessioned wines
+2016-05-17 17:13:14 [SwingWorker-pool-1-thread-9] DEBUG c.m.f.p.w.frontend.SessionLessWines - Assigning wines to session in background
+2016-05-17 17:13:14 [SwingWorker-pool-1-thread-9] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=74} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-17 17:13:14 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.SessionLessWines - Assigning wines to session
+2016-05-17 17:13:18 [SwingWorker-pool-1-thread-10] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all unsessioned wines
+2016-05-17 17:13:18 [SwingWorker-pool-1-thread-10] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:13:18 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.SessionLessWines - Finding all unsessioned wines
+2016-05-17 17:14:10 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-17 17:14:10 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Deleting wineSession
+2016-05-17 17:16:36 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Error while creating a database from SQL script file:/home/lukas/skola/PV168/wineTasting/target/classes/createTables.sqlException: ERROR 42X01: Syntax error: Encountered "\"RATING\"" at line 5, column 3.
+2016-05-17 17:16:37 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Error while inserting test data in dabaase from SQL script file:/home/lukas/skola/PV168/wineTasting/target/classes/insertValues.sqlException: ERROR 42X05: Table/View 'WINETASTING' does not exist.
+2016-05-17 17:16:37 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:16:37 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:16:37 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:16:37 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 17:17:05 [main] ERROR c.m.f.p.w.frontend.MainWindow - Error while dropping database schema file:/home/lukas/skola/PV168/wineTasting/target/classes/dropTables.sqlException: ERROR 42Y55: 'DROP TABLE' cannot be performed on 'WINETASTING' because it does not exist.
+2016-05-17 17:17:07 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-05-17 17:17:07 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-05-17 17:17:07 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-05-17 17:17:07 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-17 17:17:48 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-17 17:17:48 [SwingWorker-pool-1-thread-3] ERROR c.m.f.p.w.backend.WineTastingDAOImpl - Error when deleting session
+2016-05-17 17:17:57 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Exception thrown while deleting sessioncz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-17 17:17:58 [SwingWorker-pool-1-thread-4] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-17 17:17:58 [SwingWorker-pool-1-thread-4] ERROR c.m.f.p.w.backend.WineTastingDAOImpl - Error when deleting session
+2016-05-17 17:18:12 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Exception thrown while deleting sessioncz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57

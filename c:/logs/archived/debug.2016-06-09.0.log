@@ -1,0 +1,96 @@
+2016-06-09 12:25:14 [main] ERROR c.m.f.p.w.frontend.MainWindow - Error while dropping database schema file:/home/lukas/skola/PV168/wineTasting/target/classes/dropTables.sqlException: ERROR 08001: java.net.ConnectException : Chyba při připojování k serveru localhost na portu 1 527 se zprávou: Connection refused.
+2016-06-09 12:25:14 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Error while creating a database from SQL script file:/home/lukas/skola/PV168/wineTasting/target/classes/createTables.sqlException: ERROR 08001: java.net.ConnectException : Chyba při připojování k serveru localhost na portu 1 527 se zprávou: Connection refused.
+2016-06-09 12:25:14 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Error while inserting test data in dabaase from SQL script file:/home/lukas/skola/PV168/wineTasting/target/classes/insertValues.sqlException: ERROR 08001: java.net.ConnectException : Chyba při připojování k serveru localhost na portu 1 527 se zprávou: Connection refused.
+2016-06-09 12:25:14 [SwingWorker-pool-1-thread-2] ERROR c.m.f.p.w.backend.WineTastingDAOImpl - Error when finding all sessions
+2016-06-09 12:25:14 [SwingWorker-pool-1-thread-1] ERROR c.m.f.p.w.backend.WineSampleDAOImpl - Error when finding all wine samples
+java.sql.SQLNonTransientConnectionException: java.net.ConnectException : Chyba při připojování k serveru localhost na portu 1 527 se zprávou: Connection refused.
+	at org.apache.derby.client.am.SQLExceptionFactory.getSQLException(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.am.SqlException.getSQLException(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.jdbc.BasicClientDataSource40.getConnection(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at cz.muni.fi.pv168.winetasting.backend.WineSampleDAOImpl.findAllWineSamples(WineSampleDAOImpl.java:226) ~[classes/:na]
+	at cz.muni.fi.pv168.winetasting.frontend.MainWindow$FindAllWineSamplesWorker.doInBackground(MainWindow.java:102) [classes/:na]
+	at cz.muni.fi.pv168.winetasting.frontend.MainWindow$FindAllWineSamplesWorker.doInBackground(MainWindow.java:98) [classes/:na]
+	at javax.swing.SwingWorker$1.call(SwingWorker.java:295) [na:1.8.0_91]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_91]
+	at javax.swing.SwingWorker.run(SwingWorker.java:334) [na:1.8.0_91]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_91]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_91]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_91]
+Caused by: org.apache.derby.client.am.DisconnectException: java.net.ConnectException : Chyba při připojování k serveru localhost na portu 1 527 se zprávou: Connection refused.
+	at org.apache.derby.client.net.NetAgent.<init>(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.NetConnection.newAgent_(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.am.ClientConnection.initConnection(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.am.ClientConnection.<init>(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.NetConnection.<init>(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.ClientJDBCObjectFactoryImpl.newNetConnection(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.jdbc.BasicClientDataSource40.getConnectionX(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	... 10 common frames omitted
+Caused by: java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:1.8.0_91]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[na:1.8.0_91]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[na:1.8.0_91]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[na:1.8.0_91]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[na:1.8.0_91]
+	at java.net.Socket.connect(Socket.java:589) ~[na:1.8.0_91]
+	at java.net.Socket.connect(Socket.java:538) ~[na:1.8.0_91]
+	at java.net.Socket.<init>(Socket.java:434) ~[na:1.8.0_91]
+	at java.net.Socket.<init>(Socket.java:211) ~[na:1.8.0_91]
+	at javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:271) ~[na:1.8.0_91]
+	at org.apache.derby.client.net.OpenSocketAction.run(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.OpenSocketAction.run(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_91]
+	... 17 common frames omitted
+2016-06-09 12:25:15 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-06-09 12:25:15 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Exception thrown while listing all sessionscz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: error retrieving all sessions
+2016-06-09 12:25:15 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-06-09 12:25:15 [AWT-EventQueue-0] ERROR c.m.f.p.w.frontend.MainWindow - Exception was thrown in FindAllWineSamplesWorker in method doInBackGround cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: error retrieving all wineSamples from db
+2016-06-09 12:25:47 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineTastingDAOImpl - Finding all sessions
+2016-06-09 12:25:47 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-06-09 12:25:47 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-06-09 12:25:47 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Finding all Sessions
+2016-06-09 12:26:35 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine samples by variety Chardonnay
+2016-06-09 12:26:35 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - filtering wine samples by variety
+2016-06-09 12:26:39 [SwingWorker-pool-1-thread-4] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine samples by variety Chardonna
+2016-06-09 12:26:39 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - filtering wine samples by variety
+2016-06-09 12:26:43 [SwingWorker-pool-1-thread-5] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine samples by variety Chardonnay
+2016-06-09 12:26:43 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - filtering wine samples by variety
+2016-06-09 12:26:50 [SwingWorker-pool-1-thread-6] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-06-09 12:26:50 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample model - all wineSamples are loaded from database.
+2016-06-09 12:28:12 [SwingWorker-pool-1-thread-7] DEBUG c.m.f.p.winetasting.frontend.AddWine - Creating new sample in background
+2016-06-09 12:28:12 [SwingWorker-pool-1-thread-7] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Creatring wine sample WineSample{id=null}
+2016-06-09 12:28:12 [AWT-EventQueue-0] DEBUG c.m.f.p.winetasting.frontend.AddWine - Modifing wineSampleModel - adding new wine:WineSample{id=91}
+2016-06-09 12:28:19 [SwingWorker-pool-1-thread-8] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Deleting wine sample WineSample{id=91}
+2016-06-09 12:28:19 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.MainWindow - Changing wineSample Model - Deleting wine sample
+2016-06-09 12:29:33 [SwingWorker-pool-1-thread-9] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-06-09 12:29:33 [SwingWorker-pool-1-thread-9] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 7
+2016-06-09 12:29:33 [SwingWorker-pool-1-thread-9] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 8
+2016-06-09 12:29:33 [SwingWorker-pool-1-thread-9] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 9
+2016-06-09 12:29:33 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-06-09 12:29:49 [SwingWorker-pool-1-thread-10] DEBUG c.m.f.p.w.f.SessionDependentWines - Assigning rating to wine in background
+2016-06-09 12:29:49 [SwingWorker-pool-1-thread-10] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning rating 90 to wine WineSample{id=7} is session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-06-09 12:29:49 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Assigning rating to wine
+2016-06-09 12:31:17 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:17 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 1
+2016-06-09 12:31:17 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 2
+2016-06-09 12:31:17 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 3
+2016-06-09 12:31:17 [SwingWorker-pool-1-thread-1] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding wine sample by ID 4
+2016-06-09 12:31:17 [AWT-EventQueue-0] DEBUG c.m.f.p.w.f.SessionDependentWines - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:20 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all unsessioned wines
+2016-06-09 12:31:20 [SwingWorker-pool-1-thread-2] DEBUG c.m.f.p.w.backend.WineSampleDAOImpl - Finding all wine samples
+2016-06-09 12:31:20 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.SessionLessWines - Finding all unsessioned wines
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.frontend.SessionLessWines - Assigning wines to session in background
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=63} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=64} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=65} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=66} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=67} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=68} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=69} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=70} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=71} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=72} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=73} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=74} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=75} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [SwingWorker-pool-1-thread-3] DEBUG c.m.f.p.w.b.WineTastingManagerImpl - Assigning wine: WineSample{id=76} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-06-09 12:31:25 [AWT-EventQueue-0] DEBUG c.m.f.p.w.frontend.SessionLessWines - Assigning wines to session

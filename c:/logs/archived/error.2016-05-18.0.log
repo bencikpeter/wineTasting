@@ -1,0 +1,110 @@
+2016-05-18 09:39:00 - Error while dropping database schema file:/home/lukas/skola/PV168/wineTasting/target/classes/dropTables.sqlException: ERROR 08001: java.net.ConnectException : Error connecting to server localhost on port 1,527 with message Connection refused.
+2016-05-18 09:39:00 - Error while creating a database from SQL script file:/home/lukas/skola/PV168/wineTasting/target/classes/createTables.sqlException: ERROR 08001: java.net.ConnectException : Error connecting to server localhost on port 1,527 with message Connection refused.
+2016-05-18 09:39:00 - Error while inserting test data in dabaase from SQL script file:/home/lukas/skola/PV168/wineTasting/target/classes/insertValues.sqlException: ERROR 08001: java.net.ConnectException : Error connecting to server localhost on port 1,527 with message Connection refused.
+2016-05-18 09:39:00 - Error when finding all sessions
+2016-05-18 09:39:00 - Error when finding all wine samples
+java.sql.SQLNonTransientConnectionException: java.net.ConnectException : Error connecting to server localhost on port 1,527 with message Connection refused.
+	at org.apache.derby.client.am.SQLExceptionFactory.getSQLException(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.am.SqlException.getSQLException(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.jdbc.BasicClientDataSource40.getConnection(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at cz.muni.fi.pv168.winetasting.backend.WineSampleDAOImpl.findAllWineSamples(WineSampleDAOImpl.java:226) ~[classes/:na]
+	at cz.muni.fi.pv168.winetasting.frontend.MainWindow$FindAllWineSamplesWorker.doInBackground(MainWindow.java:100) [classes/:na]
+	at cz.muni.fi.pv168.winetasting.frontend.MainWindow$FindAllWineSamplesWorker.doInBackground(MainWindow.java:96) [classes/:na]
+	at javax.swing.SwingWorker$1.call(SwingWorker.java:295) [na:1.8.0_91]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_91]
+	at javax.swing.SwingWorker.run(SwingWorker.java:334) [na:1.8.0_91]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_91]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_91]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_91]
+Caused by: org.apache.derby.client.am.DisconnectException: java.net.ConnectException : Error connecting to server localhost on port 1,527 with message Connection refused.
+	at org.apache.derby.client.net.NetAgent.<init>(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.NetConnection.newAgent_(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.am.ClientConnection.initConnection(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.am.ClientConnection.<init>(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.NetConnection.<init>(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.ClientJDBCObjectFactoryImpl.newNetConnection(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.jdbc.BasicClientDataSource40.getConnectionX(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	... 10 common frames omitted
+Caused by: java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:1.8.0_91]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[na:1.8.0_91]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[na:1.8.0_91]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[na:1.8.0_91]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[na:1.8.0_91]
+	at java.net.Socket.connect(Socket.java:589) ~[na:1.8.0_91]
+	at java.net.Socket.connect(Socket.java:538) ~[na:1.8.0_91]
+	at java.net.Socket.<init>(Socket.java:434) ~[na:1.8.0_91]
+	at java.net.Socket.<init>(Socket.java:211) ~[na:1.8.0_91]
+	at javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:271) ~[na:1.8.0_91]
+	at org.apache.derby.client.net.OpenSocketAction.run(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at org.apache.derby.client.net.OpenSocketAction.run(Unknown Source) ~[derbyclient-10.11.1.1.jar:na]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_91]
+	... 17 common frames omitted
+2016-05-18 09:39:01 - Changing wineSample Model - Finding all Sessions
+2016-05-18 09:39:01 - Exception thrown while listing all sessionscz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: error retrieving all sessions
+2016-05-18 09:39:01 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-18 09:39:01 - Exception was thrown in FindAllWineSamplesWorker in method doInBackGround cz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: error retrieving all wineSamples from db
+2016-05-18 09:39:27 - Error while dropping database schema file:/home/lukas/skola/PV168/wineTasting/target/classes/dropTables.sqlException: ERROR X0Y25: Operation 'DROP CONSTRAINT' cannot be performed on object 'SQL160517171705600' because CONSTRAINT 'SQL160517171705872' is dependent on that object.
+2016-05-18 09:39:27 - Error while creating a database from SQL script file:/home/lukas/skola/PV168/wineTasting/target/classes/createTables.sqlException: ERROR X0Y32: Table/View 'WINESAMPLE' already exists in Schema 'APP'.
+2016-05-18 09:39:28 - Finding all sessions
+2016-05-18 09:39:28 - Finding all wine samples
+2016-05-18 09:39:28 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-18 09:39:28 - Changing wineSample Model - Finding all Sessions
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Finding wine sample by ID 1
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-18 09:41:21 - Assigning wine: WineSample{id=1} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-18 09:41:21 - Finding all unsessioned wines
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Deleting wine sample WineSample{id=1}
+2016-05-18 09:41:21 - Finding wine sample by ID 1
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Updating wine sample WineSample{id=1}
+2016-05-18 09:41:21 - Finding wine sample by ID 1
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Finding wine sample by ID 1
+2016-05-18 09:41:21 - Finding all wine samples
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Creatring wine sample WineSample{id=null}
+2016-05-18 09:41:21 - Finding wine samples by variety Rizling
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-18 09:41:21 - Finding sessions by date
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-18 09:41:21 - Finding all sessions
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-18 09:41:21 - Updating session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@78d6473d
+2016-05-18 09:41:21 - Finding all sessions
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b8
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030b9
+2016-05-18 09:41:21 - Creating session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@357030ba
+2016-05-18 09:41:21 - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@35703479
+2016-05-18 09:41:21 - Finding all sessions
+2016-05-18 09:41:29 - Finding all wine samples
+2016-05-18 09:41:29 - Finding all sessions
+2016-05-18 09:41:30 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-18 09:41:30 - Changing wineSample Model - Finding all Sessions
+2016-05-18 09:41:44 - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-05-18 09:41:44 - Error when deleting session
+2016-05-18 09:41:49 - Exception thrown while deleting sessioncz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-05-18 09:41:55 - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@224c4016
+2016-05-18 09:41:55 - Changing wineSample Model - Deleting wineSession

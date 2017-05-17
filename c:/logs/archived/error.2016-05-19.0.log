@@ -1,0 +1,97 @@
+2016-05-19 08:03:53 - Finding all sessions
+2016-05-19 08:03:53 - Finding all wine samples
+2016-05-19 08:03:53 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-19 08:03:53 - Changing wineSample Model - Finding all Sessions
+2016-05-19 08:04:08 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:04:09 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:04:38 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:04:38 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:04:41 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-19 08:04:41 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-19 08:04:44 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-05-19 08:04:44 - Finding wine sample by ID 7
+2016-05-19 08:04:44 - Finding wine sample by ID 8
+2016-05-19 08:04:44 - Finding wine sample by ID 9
+2016-05-19 08:04:44 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@f5115ae1
+2016-05-19 08:04:47 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-19 08:04:47 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@e13bac8d
+2016-05-19 08:04:48 - Finding all unsessioned wines
+2016-05-19 08:04:48 - Finding all wine samples
+2016-05-19 08:04:48 - Finding all unsessioned wines
+2016-05-19 08:05:38 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:05:38 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:05:42 - Finding all unsessioned wines
+2016-05-19 08:05:42 - Finding all wine samples
+2016-05-19 08:05:42 - Finding all unsessioned wines
+2016-05-19 08:05:53 - Assigning wines to session in background
+2016-05-19 08:05:53 - Assigning wine: WineSample{id=30} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:05:54 - Assigning wines to session
+2016-05-19 08:06:03 - Assigning rating to wine in background
+2016-05-19 08:06:03 - Assigning rating 90 to wine WineSample{id=30} is session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:06:03 - Assigning rating to wine
+2016-05-19 08:06:09 - Removing wines from session in background
+2016-05-19 08:06:09 - removing wine WineSample{id=30} from session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:06:09 - Removing wines from session
+2016-05-19 08:06:34 - Finding wine samples by variety Chardonnay
+2016-05-19 08:06:34 - Changing wineSample Model - filtering wine samples by variety
+2016-05-19 08:06:41 - Finding all wine samples
+2016-05-19 08:06:41 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-19 08:10:53 - Finding all wine samples
+2016-05-19 08:10:53 - Finding all sessions
+2016-05-19 08:10:53 - Changing wineSample Model - Finding all Sessions
+2016-05-19 08:10:53 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-19 08:11:21 - Creating new sample in background
+2016-05-19 08:11:21 - Creatring wine sample WineSample{id=null}
+2016-05-19 08:11:21 - Modifing wineSampleModel - adding new wine:WineSample{id=91}
+2016-05-19 08:11:44 - Updating wine sample in background
+2016-05-19 08:11:44 - Updating wine sample WineSample{id=91}
+2016-05-19 08:11:44 - Modifing wineSampleModel - updating wine: WineSample{id=91}
+2016-05-19 08:11:52 - Deleting wine sample WineSample{id=91}
+2016-05-19 08:11:52 - Changing wineSample Model - Deleting wine sample
+2016-05-19 08:12:11 - Finding wine samples by variety Chardonnay
+2016-05-19 08:12:11 - Changing wineSample Model - filtering wine samples by variety
+2016-05-19 08:12:13 - Finding all wine samples
+2016-05-19 08:12:13 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-19 08:13:01 - Deleting session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-19 08:13:01 - Error when deleting session
+2016-05-19 08:13:04 - Exception thrown while deleting sessioncz.muni.fi.pv168.winetasting.backend.Exceptions.ServiceFailureException: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-19 08:13:07 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-19 08:13:07 - Finding wine sample by ID 1
+2016-05-19 08:13:07 - Finding wine sample by ID 2
+2016-05-19 08:13:07 - Finding wine sample by ID 3
+2016-05-19 08:13:07 - Finding wine sample by ID 4
+2016-05-19 08:13:07 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@248ebc57
+2016-05-19 08:13:23 - Finding all wines in session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:23 - Finding winesamples in session:cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:27 - Finding all unsessioned wines
+2016-05-19 08:13:27 - Finding all wine samples
+2016-05-19 08:13:27 - Finding all unsessioned wines
+2016-05-19 08:13:39 - Assigning wines to session in background
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=11} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=12} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=13} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=14} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=15} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=16} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=17} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=18} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=19} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=20} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=21} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=22} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=23} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wine: WineSample{id=24} to session: cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:39 - Assigning wines to session
+2016-05-19 08:13:49 - Assigning rating to wine in background
+2016-05-19 08:13:49 - Assigning rating 89 to wine WineSample{id=12} is session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:49 - Assigning rating to wine
+2016-05-19 08:13:58 - Assigning rating to wine in background
+2016-05-19 08:13:58 - Assigning rating 79 to wine WineSample{id=19} is session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:13:58 - Assigning rating to wine
+2016-05-19 08:14:09 - Removing wines from session in background
+2016-05-19 08:14:09 - removing wine WineSample{id=11} from session cz.muni.fi.pv168.winetasting.backend.WineTastingSession@c6ffc563
+2016-05-19 08:14:09 - Removing wines from session
+2016-05-19 08:16:10 - Finding all wine samples
+2016-05-19 08:16:10 - Finding all sessions
+2016-05-19 08:16:11 - Changing wineSample model - all wineSamples are loaded from database.
+2016-05-19 08:16:11 - Changing wineSample Model - Finding all Sessions
